@@ -1,6 +1,6 @@
 package gov.iti.jets.persistence.dto.categories;
 
-import gov.iti.jets.persistence.dto.FilmCategoryDto;
+import gov.iti.jets.persistence.dto.films.FilmCategoryDto;
 
 import java.io.Serializable;
 import java.util.Date;

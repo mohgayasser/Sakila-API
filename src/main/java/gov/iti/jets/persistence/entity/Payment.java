@@ -3,7 +3,7 @@ package gov.iti.jets.persistence.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.util.Date;
 
 @Entity
 @Table(name = "payment")
@@ -29,10 +29,11 @@ public class Payment {
     private BigDecimal amount;
 
     @Column(name = "payment_date", nullable = false)
-    private Instant paymentDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date paymentDate;
 
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Date lastUpdate;
 
     public Integer getId() {
         return id;
@@ -74,19 +75,32 @@ public class Payment {
         this.amount = amount;
     }
 
-    public Instant getPaymentDate() {
+    public Date getPaymentDate() {
         return paymentDate;
     }
+// has a trigger in database
+//    public void setPaymentDate(Date paymentDate) {
+//        this.paymentDate = paymentDate;
+//    }
 
-    public void setPaymentDate(Instant paymentDate) {
-        this.paymentDate = paymentDate;
+    public Payment() {
     }
 
-    public Instant getLastUpdate() {
+    public Payment(Integer id, Customer customer, Staff staff, Rental rental, BigDecimal amount, Date paymentDate, Date lastUpdate) {
+        this.id = id;
+        this.customer = customer;
+        this.staff = staff;
+        this.rental = rental;
+        this.amount = amount;
+        this.paymentDate = paymentDate;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

@@ -2,7 +2,6 @@ package gov.iti.jets.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Entity

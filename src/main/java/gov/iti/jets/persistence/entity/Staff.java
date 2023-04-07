@@ -2,7 +2,9 @@ package gov.iti.jets.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "staff")
@@ -42,10 +44,32 @@ public class Staff {
     private String password;
 
     @Column(name = "last_update", nullable = false)
-    private Instant lastUpdate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
+    
+    @OneToMany(mappedBy = "staff")
+    private Set<Payment> payments = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "staff")
+    private Set<Rental> rentals = new LinkedHashSet<>();
     public Short getId() {
         return id;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public Set<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(Set<Rental> rentals) {
+        this.rentals = rentals;
     }
 
     public void setId(Short id) {
@@ -124,11 +148,11 @@ public class Staff {
         this.password = password;
     }
 
-    public Instant getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

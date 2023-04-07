@@ -2,7 +2,7 @@ package gov.iti.jets.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -23,7 +23,8 @@ public class Store {
     private Address address;
 
     @Column(name = "last_update", nullable = false)
-    private Instant lastUpdate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
 
     @OneToMany(mappedBy = "store")
     private Set<Inventory> inventories = new LinkedHashSet<>();
@@ -58,11 +59,11 @@ public class Store {
         this.address = address;
     }
 
-    public Instant getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

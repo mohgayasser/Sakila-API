@@ -1,20 +1,19 @@
 package gov.iti.jets.persistence.dto.categories;
 
 import gov.iti.jets.persistence.entity.Category;
-import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * A DTO for the {@link Category} entity
  */
 
- @XmlRootElement
+@XmlRootElement
 public class CategoryDto implements Serializable{
 
     private  Integer id;

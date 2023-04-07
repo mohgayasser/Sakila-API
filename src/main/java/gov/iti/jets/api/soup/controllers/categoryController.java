@@ -8,7 +8,7 @@ import jakarta.jws.WebService;
 @WebService
 public class categoryController {
 
-    public CategoryDto addCategory(CategoryDto categoryDto) throws validationException{
+    public static CategoryDto addCategory(CategoryDto categoryDto) throws validationException{
 
         addCategoryService addCategoryService =new addCategoryService();
         CategoryDto dto =  addCategoryService.addCategory(categoryDto);

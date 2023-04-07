@@ -1,4 +1,4 @@
-package gov.iti.jets.persistence.dto;
+package gov.iti.jets.persistence.dto.films;
 
 import java.io.Serializable;
 import java.util.Objects;

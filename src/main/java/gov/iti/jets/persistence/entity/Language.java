@@ -2,7 +2,9 @@ package gov.iti.jets.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "language")
@@ -16,7 +18,18 @@ public class Language {
     private String name;
 
     @Column(name = "last_update", nullable = false)
-    private Instant lastUpdate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
+    @OneToMany(mappedBy = "language")
+    private Set<Film> films = new LinkedHashSet<>();
+
+    public Set<Film> getFilms() {
+        return films;
+    }
+
+    public void setFilms(Set<Film> films) {
+        this.films = films;
+    }
 
     public Short getId() {
         return id;
@@ -34,11 +47,11 @@ public class Language {
         this.name = name;
     }
 
-    public Instant getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

@@ -1,9 +1,7 @@
-package gov.iti.jets.persistence.dto;
+package gov.iti.jets.persistence.dto.films;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * A DTO for the {@link gov.iti.jets.persistence.entity.FilmCategory} entity

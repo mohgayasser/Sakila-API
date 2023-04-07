@@ -18,6 +18,7 @@ public class Category {
     private String name;
 
     @Column(name = "last_update", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "category")

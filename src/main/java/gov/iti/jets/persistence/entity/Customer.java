@@ -2,7 +2,7 @@ package gov.iti.jets.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -35,16 +35,35 @@ public class Customer {
     private Boolean active = false;
 
     @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update")
-    private Instant lastUpdate;
+    private Date lastUpdate;
 
     @OneToMany(mappedBy = "customer")
     private Set<Payment> payments = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "customer")
     private Set<Rental> rentals = new LinkedHashSet<>();
+
+    public Customer() {
+    }
+
+    public Customer(Integer id, Store store, String firstName, String lastName, String email, Address address, Boolean active, Date createDate, Date lastUpdate, Set<Payment> payments, Set<Rental> rentals) {
+        this.id = id;
+        this.store = store;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.active = active;
+        this.createDate = createDate;
+        this.lastUpdate = lastUpdate;
+        this.payments = payments;
+        this.rentals = rentals;
+    }
 
     public Integer getId() {
         return id;
@@ -102,19 +121,19 @@ public class Customer {
         this.active = active;
     }
 
-    public Instant getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
+//      has a trigger in database
+//    public void setCreateDate(Date createDate) {
+//        this.createDate = createDate;
+//    }
 
-    public void setCreateDate(Instant createDate) {
-        this.createDate = createDate;
-    }
-
-    public Instant getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

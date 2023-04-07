@@ -37,7 +37,7 @@ public class addCategoryService {
 
     return categoryDto;
     }catch (Exception exception){ // what is the sql exception
-       throw new validationException("Data Base Eroor");
+       throw new validationException("Data Base Error");
     }
  }
     

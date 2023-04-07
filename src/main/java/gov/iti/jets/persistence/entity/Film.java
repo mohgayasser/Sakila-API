@@ -1,9 +1,11 @@
 package gov.iti.jets.persistence.entity;
 
+import gov.iti.jets.persistence.entity.enums.FilmRating;
 import jakarta.persistence.*;
-
+import gov.iti.jets.service.util.*;
 import java.math.BigDecimal;
-import java.time.Instant;
+
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -45,16 +47,19 @@ public class Film {
     @Column(name = "replacement_cost", nullable = false, precision = 5, scale = 2)
     private BigDecimal replacementCost;
 
-    @Lob
+
     @Column(name = "rating")
-    private String rating;
+    @Convert (converter = filmRatingConverter.class)
+    private FilmRating rating;
 
     @Lob
+    @Convert (converter = specialFeatureConverter.class)
     @Column(name = "special_features")
-    private String specialFeatures;
+    private Set<String> specialFeatures;
 
     @Column(name = "last_update", nullable = false)
-    private Instant lastUpdate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
 
     @OneToMany(mappedBy = "film")
     private Set<Inventory> inventories = new LinkedHashSet<>();
@@ -145,27 +150,27 @@ public class Film {
         this.replacementCost = replacementCost;
     }
 
-    public String getRating() {
+    public FilmRating getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(FilmRating rating) {
         this.rating = rating;
     }
 
-    public String getSpecialFeatures() {
+    public Set<String> getSpecialFeatures() {
         return specialFeatures;
     }
 
-    public void setSpecialFeatures(String specialFeatures) {
+    public void setSpecialFeatures(Set<String> specialFeatures) {
         this.specialFeatures = specialFeatures;
     }
 
-    public Instant getLastUpdate() {
+    public Date getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Instant lastUpdate) {
+    public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
