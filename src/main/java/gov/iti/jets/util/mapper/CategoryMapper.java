@@ -1,7 +1,7 @@
 package gov.iti.jets.util.mapper;
 
-import gov.iti.jets.persistence.dto.categories.CategoryDto;
-import gov.iti.jets.persistence.dto.categories.FilmCategoryDto;
+import gov.iti.jets.persistence.dto.categories.getCategoryDto;
+import gov.iti.jets.persistence.dto.categories.getFilmCategoryDto;
 import gov.iti.jets.persistence.dto.inventory.FilmDto;
 import gov.iti.jets.persistence.entity.Category;
 import gov.iti.jets.persistence.entity.Film;
@@ -14,10 +14,10 @@ public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Category categoryDtoToCategory(CategoryDto categoryDto);
+    Category categoryDtoToCategory(getCategoryDto getCategoryDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    CategoryDto categoryToCategoryDto(Category category);
+    getCategoryDto categoryToCategoryDto(Category category);
 
 
     @AfterMapping
@@ -26,13 +26,13 @@ public interface CategoryMapper {
     }
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    FilmCategory filmCategoryDtoToFilmCategory(FilmCategoryDto filmCategoryDto);
+    FilmCategory filmCategoryDtoToFilmCategory(getFilmCategoryDto getFilmCategoryDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    FilmCategoryDto filmCategoryToFilmCategoryDto(FilmCategory filmCategory);
+    getFilmCategoryDto filmCategoryToFilmCategoryDto(FilmCategory filmCategory);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    FilmCategory updateFilmCategoryFromFilmCategoryDto(FilmCategoryDto filmCategoryDto, @MappingTarget FilmCategory filmCategory);
+    FilmCategory updateFilmCategoryFromFilmCategoryDto(getFilmCategoryDto getFilmCategoryDto, @MappingTarget FilmCategory filmCategory);
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 
     Film filmDtoToFilm(FilmDto filmDto);

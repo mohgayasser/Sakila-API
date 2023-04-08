@@ -4,11 +4,10 @@ import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FilmLanguageDto implements Serializable {
+public class getFilmLanguageDto implements Serializable {
     @XmlAttribute(name ="languageId")
     private  Short id;
     @XmlElement(name = "languageName")
@@ -17,13 +16,13 @@ public class FilmLanguageDto implements Serializable {
     private Date lastUpdate;
 
 
-    public FilmLanguageDto(Short id, String name, Date lastUpdate) {
+    public getFilmLanguageDto(Short id, String name, Date lastUpdate) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
     }
 
-    public FilmLanguageDto() {
+    public getFilmLanguageDto() {
     }
 
     public Short getId() {

@@ -81,6 +81,7 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
+
         <!-- end of validation-->
 <!--        Testing Dependencies-->
         <dependency>
@@ -117,6 +118,7 @@
             <version>2.14.2</version>
             <scope>compile</scope>
         </dependency>
+
         <!-- end of testing dependencies-->
     </dependencies>
 
@@ -134,11 +136,7 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>1.18.26</version>
-                        </path>
+
                         <!-- other annotation processors -->
                     </annotationProcessorPaths>
                 </configuration>

@@ -1,7 +1,6 @@
 package gov.iti.jets.persistence.dto;
 
-import gov.iti.jets.persistence.dto.categories.CategoryDto;
-import gov.iti.jets.persistence.dto.films.FilmDto;
+import gov.iti.jets.persistence.dto.films.getFilmDto;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -23,7 +22,7 @@ import java.util.Date;
 
 public class FilmCategoryDto implements Serializable {
     private  FilmCategoryIdDto id;
-    private  FilmDto film;
+    private getFilmDto film;
     private  Date lastUpdate;
 
 }

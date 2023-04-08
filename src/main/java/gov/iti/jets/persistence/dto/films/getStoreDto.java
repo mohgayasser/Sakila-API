@@ -2,10 +2,6 @@ package gov.iti.jets.persistence.dto.films;
 
 import gov.iti.jets.persistence.dto.AddressDto;
 import jakarta.xml.bind.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,13 +11,13 @@ import java.io.Serializable;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StoreDto implements Serializable {
+public class getStoreDto implements Serializable {
     @XmlAttribute
     private  Short id;
     @XmlElement
     private  AddressDto address;
 
-    public StoreDto() {
+    public getStoreDto() {
     }
 
     public Short getId() {

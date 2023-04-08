@@ -1,8 +1,6 @@
 package gov.iti.jets.persistence.dto.films;
 
 import gov.iti.jets.persistence.dto.FilmActorDto;
-import gov.iti.jets.persistence.dto.films.FilmCategoryDto;
-import gov.iti.jets.persistence.dto.films.InventoryDto;
 import gov.iti.jets.persistence.entity.enums.FilmRating;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.*;
@@ -18,7 +16,7 @@ import java.util.Set;
 
 @XmlRootElement(name="film")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FilmDto implements Serializable {
+public class getFilmDto implements Serializable {
         @XmlAttribute(name = "filmId")
         private    Integer id;
         @XmlAttribute(name = "filmTitle")
@@ -28,9 +26,9 @@ public class FilmDto implements Serializable {
         @XmlElement
         private  Integer releaseYear;
         @XmlElement(name = "language")
-        private  FilmLanguageDto language;
+        private getFilmLanguageDto language;
         @XmlElement(name = "orignalLanguage",type = JAXBElement.class, required = false)
-        private  FilmLanguageDto orignalLanguage;
+        private getFilmLanguageDto orignalLanguage;
         @XmlElement
         private  Short rentalDuration;
          @XmlElement
@@ -44,11 +42,11 @@ public class FilmDto implements Serializable {
         @XmlElement(name="filmLastUpdate")
         private  Date lastUpdate;
          @XmlElement
-        private  Set<InventoryDto> inventories;
+        private  Set<getInventoryDto> inventories;
         @XmlElement
         private  Set<FilmActorDto> filmActors;
         @XmlElement( name = "filmCategories")
-       private Set<FilmCategoryDto> filmCategories ;
+       private Set<getFilmCategoryDto> filmCategories ;
         @XmlElement
         private   Set<String>specialFeatures;
 
@@ -60,7 +58,7 @@ public class FilmDto implements Serializable {
         this.specialFeatures = specialFeatures;
     }
 
-    public FilmDto(){}
+    public getFilmDto(){}
 
         public Integer getId() {
                 return id;
@@ -94,19 +92,19 @@ public class FilmDto implements Serializable {
                 this.releaseYear = releaseYear;
         }
 
-        public FilmLanguageDto getLanguage() {
+        public getFilmLanguageDto getLanguage() {
                 return language;
         }
 
-        public void setLanguage(FilmLanguageDto language) {
+        public void setLanguage(getFilmLanguageDto language) {
                 this.language = language;
         }
 
-        public FilmLanguageDto getOrignalLanguage() {
+        public getFilmLanguageDto getOrignalLanguage() {
                 return orignalLanguage;
         }
 
-        public void setOrignalLanguage(FilmLanguageDto orignalLanguage) {
+        public void setOrignalLanguage(getFilmLanguageDto orignalLanguage) {
                 this.orignalLanguage = orignalLanguage;
         }
 
@@ -158,11 +156,11 @@ public class FilmDto implements Serializable {
                 this.lastUpdate = lastUpdate;
         }
 
-        public Set<InventoryDto> getInventories() {
+        public Set<getInventoryDto> getInventories() {
                 return inventories;
         }
 
-        public void setInventories(Set<InventoryDto> inventories) {
+        public void setInventories(Set<getInventoryDto> inventories) {
                 this.inventories = inventories;
         }
 
@@ -174,11 +172,11 @@ public class FilmDto implements Serializable {
                 this.filmActors = filmActors;
         }
 
-        public Set<FilmCategoryDto> getFilmCategories() {
+        public Set<getFilmCategoryDto> getFilmCategories() {
             return filmCategories;
         }
 
-        public void setFilmCategories(Set<FilmCategoryDto> filmCategories) {
+        public void setFilmCategories(Set<getFilmCategoryDto> filmCategories) {
             this.filmCategories = filmCategories;
         }
 

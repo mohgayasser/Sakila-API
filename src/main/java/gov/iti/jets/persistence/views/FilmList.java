@@ -1,11 +1,13 @@
 package gov.iti.jets.persistence.views;
 
+import gov.iti.jets.util.converters.filmListConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.Immutable;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Mapping for DB view
@@ -43,8 +45,12 @@ public class FilmList {
     private String rating;
 
     @Lob
+    @Convert (converter = filmListConverter.class)
     @Column(name = "actors")
-    private String actors;
+    private List<String> actors;
+
+    public FilmList() {
+    }
 
     public Integer getFid() {
         return fid;
@@ -74,10 +80,18 @@ public class FilmList {
         return rating;
     }
 
-    public String getActors() {
+    public List<String> getActors() {
         return actors;
     }
 
-    protected FilmList() {
+    public FilmList(Integer fid, String title, String description, String category, BigDecimal price, Integer length, String rating, List<String> actors) {
+        this.fid = fid;
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.length = length;
+        this.rating = rating;
+        this.actors = actors;
     }
 }

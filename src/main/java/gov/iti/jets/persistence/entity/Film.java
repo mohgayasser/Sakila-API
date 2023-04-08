@@ -1,7 +1,5 @@
 package gov.iti.jets.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import gov.iti.jets.persistence.entity.enums.FilmRating;
 import gov.iti.jets.util.converters.filmRatingConverter;
 import gov.iti.jets.util.converters.specialFeatureConverter;

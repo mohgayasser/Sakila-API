@@ -1,11 +1,11 @@
 package gov.iti.jets.util.mapper;
 
-import gov.iti.jets.persistence.dto.categories.FilmCategoryIdDto;
-import gov.iti.jets.persistence.dto.films.InventoryDto;
+import gov.iti.jets.persistence.dto.categories.getFilmCategoryIdDto;
+import gov.iti.jets.persistence.dto.films.getFilmDto;
+import gov.iti.jets.persistence.dto.films.getInventoryDto;
 import gov.iti.jets.persistence.dto.StoreDto;
-import gov.iti.jets.persistence.dto.films.FilmCategoryDto;
-import gov.iti.jets.persistence.dto.films.FilmDto;
-import gov.iti.jets.persistence.dto.films.FilmLanguageDto;
+import gov.iti.jets.persistence.dto.films.getFilmCategoryDto;
+import gov.iti.jets.persistence.dto.films.getFilmLanguageDto;
 import gov.iti.jets.persistence.entity.*;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -14,9 +14,9 @@ import java.util.Set;
 
 @Mapper(uses = {FilmActorMapper.class,AddressMapper.class})
 public interface FilmMapper {
-    Film filmDtoToFilm(FilmDto filmDto);
+    Film filmDtoToFilm(getFilmDto getFilmDto);
 
-    FilmDto filmToFilmDto(Film film);
+    getFilmDto filmToFilmDto(Film film);
 
     FilmMapper INSTANCE = Mappers.getMapper(FilmMapper.class);
 
@@ -31,34 +31,34 @@ public interface FilmMapper {
     }
 
     //map language
-    Language filmLanguageDtoToLanguage(FilmLanguageDto filmLanguageDto);
+    Language filmLanguageDtoToLanguage(getFilmLanguageDto getFilmLanguageDto);
 
-    FilmLanguageDto languageToFilmLanguageDto(Language language);
+    getFilmLanguageDto languageToFilmLanguageDto(Language language);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Set<Inventory> inventoriesDtoToInventories(Set<InventoryDto> inventoriesDto);
+    Set<Inventory> inventoriesDtoToInventories(Set<getInventoryDto> inventoriesDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    InventoryDto inventoryToInventoryDto(Inventory inventories);
+    getInventoryDto inventoryToInventoryDto(Inventory inventories);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    Inventory inventoryDtoToInventory(InventoryDto inventoriesDto);
+    Inventory inventoryDtoToInventory(getInventoryDto inventoriesDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    Set<InventoryDto> inventoryToInventoryDto(Set<Inventory> inventories);
+    Set<getInventoryDto> inventoryToInventoryDto(Set<Inventory> inventories);
 
     ///// Film Category Mapper for Set And One Category
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    Set<FilmCategory> filmCategoriesDtoToFilmCategories(Set<FilmCategoryDto> filmCategoriesDto);
+    Set<FilmCategory> filmCategoriesDtoToFilmCategories(Set<getFilmCategoryDto> filmCategoriesDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    Set<FilmCategoryDto> filmCategoriesToFilmCategoriesDto(Set<FilmCategory> filmCategories);
+    Set<getFilmCategoryDto> filmCategoriesToFilmCategoriesDto(Set<FilmCategory> filmCategories);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    FilmCategory filmCategoryDtoToFilmCategory(FilmCategoryDto filmCategoryDto);
+    FilmCategory filmCategoryDtoToFilmCategory(getFilmCategoryDto getFilmCategoryDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.SET_TO_NULL)
-    FilmCategoryDto filmCategoryToFilmCategoryDto(FilmCategory filmCategory);
+    getFilmCategoryDto filmCategoryToFilmCategoryDto(FilmCategory filmCategory);
 
     /////////////////////////////////////////////////////////////////////////////////////
     Store storeDtoToStore(StoreDto storeDto);
@@ -66,10 +66,10 @@ public interface FilmMapper {
     StoreDto storeToStoreDto(Store store);
 
 
-    FilmCategoryId filmCategoryIdDtoToFilmCategoryId(FilmCategoryIdDto filmCategoryIdDto);
+    FilmCategoryId filmCategoryIdDtoToFilmCategoryId(getFilmCategoryIdDto getFilmCategoryIdDto);
 
-    FilmCategoryIdDto filmCategoryIdToFilmCategoryIdDto(FilmCategoryId filmCategoryId);
+    getFilmCategoryIdDto filmCategoryIdToFilmCategoryIdDto(FilmCategoryId filmCategoryId);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    FilmCategoryId updateFilmCategoryIdFromFilmCategoryIdDto(FilmCategoryIdDto filmCategoryIdDto, @MappingTarget FilmCategoryId filmCategoryId);
+    FilmCategoryId updateFilmCategoryIdFromFilmCategoryIdDto(getFilmCategoryIdDto getFilmCategoryIdDto, @MappingTarget FilmCategoryId filmCategoryId);
 }

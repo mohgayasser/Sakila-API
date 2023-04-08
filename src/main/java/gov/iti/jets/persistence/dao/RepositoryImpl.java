@@ -1,9 +1,11 @@
 package gov.iti.jets.persistence.dao;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import gov.iti.jets.persistence.dao.interfaces.ReadOnlyRepository;
+import gov.iti.jets.util.exceptions.validationException;
 import gov.iti.jets.util.models.Page;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -46,8 +48,7 @@ public class RepositoryImpl<E, K> implements ReadOnlyRepository<E, K> {
     @Override
     public Optional<E> findFromContext(K id) {
         E ew = _entityManager.getReference(type, id);
-        Optional<E> resOptional=Optional.of(ew);
-        return Optional.ofNullable(null);
+        return Optional.ofNullable(ew);
     }
 
     @Override
@@ -86,10 +87,14 @@ public class RepositoryImpl<E, K> implements ReadOnlyRepository<E, K> {
     }
 
     @Override
-    public Optional<E> findById(int id) {
-        E ew = _entityManager.find(type, id);
-        Optional<E> resOptional=Optional.of(ew);
-        return Optional.ofNullable(null);
+    public Optional<E> findById(int id) throws validationException {
+        E ew = null;
+        try {
+             ew = _entityManager.find(type, id);
+        }catch (Exception e){
+            throw new validationException("this id doesn't exist in our system");
+        }
+        return Optional.ofNullable(ew);
     }
 
     @Override

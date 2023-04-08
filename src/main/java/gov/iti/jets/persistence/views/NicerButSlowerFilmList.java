@@ -28,7 +28,7 @@ public class NicerButSlowerFilmList {
     private String description;
 
     @Size(max = 25)
-    @Column(name = "category", length = 25)
+    @Column(name = "category.java", length = 25)
     private String category;
 
     @NotNull

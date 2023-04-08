@@ -4,9 +4,6 @@ import gov.iti.jets.persistence.dto.inventory.FilmDto;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,19 +14,19 @@ import java.util.Date;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FilmCategoryDto implements Serializable {
-    private  FilmCategoryIdDto id;
+public class getFilmCategoryDto implements Serializable {
+    private getFilmCategoryIdDto id;
     private  FilmDto film;
     private  Date lastUpdate;
 
-    public FilmCategoryDto() {
+    public getFilmCategoryDto() {
     }
 
-    public FilmCategoryIdDto getId() {
+    public getFilmCategoryIdDto getId() {
         return id;
     }
 
-    public void setId(FilmCategoryIdDto id) {
+    public void setId(getFilmCategoryIdDto id) {
         this.id = id;
     }
 

@@ -1,8 +1,6 @@
 package gov.iti.jets.persistence.dto.films;
 
-import gov.iti.jets.persistence.dto.films.StoreDto;
 import jakarta.xml.bind.annotation.*;
-import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,15 +13,15 @@ import java.util.Date;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
-public class InventoryDto implements Serializable {
+public class getInventoryDto implements Serializable {
     @XmlAttribute
     private  Integer id;
     @XmlElement
     private  Date lastUpdate;
     @XmlElement
-    private StoreDto store;
-    public InventoryDto(){}
-    public InventoryDto(Integer id, Date lastUpdate, StoreDto store) {
+    private getStoreDto store;
+    public getInventoryDto(){}
+    public getInventoryDto(Integer id, Date lastUpdate, getStoreDto store) {
         this.id = id;
         this.lastUpdate = lastUpdate;
         this.store = store;
@@ -45,11 +43,11 @@ public class InventoryDto implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
-    public void setStore(StoreDto store) {
+    public void setStore(getStoreDto store) {
         this.store = store;
     }
 
-    public StoreDto getStore() {
+    public getStoreDto getStore() {
         return store;
     }
 }

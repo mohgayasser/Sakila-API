@@ -3,9 +3,6 @@ package gov.iti.jets.persistence.dto.categories;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,13 +14,13 @@ import java.util.Set;
 
 @XmlRootElement (name = "Category")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CategoryDto implements Serializable {
+public class getCategoryDto implements Serializable {
     private    Integer id;
     private    String name;
     private    Date lastUpdate;
-    private    Set<FilmCategoryDto> filmCategories;
+    private    Set<getFilmCategoryDto> filmCategories;
 
-    public CategoryDto() {
+    public getCategoryDto() {
     }
 
     public Integer getId() {
@@ -50,11 +47,11 @@ public class CategoryDto implements Serializable {
         this.lastUpdate = lastUpdate;
     }
 
-    public Set<FilmCategoryDto> getFilmCategories() {
+    public Set<getFilmCategoryDto> getFilmCategories() {
         return filmCategories;
     }
 
-    public void setFilmCategories(Set<FilmCategoryDto> filmCategories) {
+    public void setFilmCategories(Set<getFilmCategoryDto> filmCategories) {
         this.filmCategories = filmCategories;
     }
 }

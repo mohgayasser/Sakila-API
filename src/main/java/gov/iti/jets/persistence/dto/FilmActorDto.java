@@ -1,10 +1,6 @@
 package gov.iti.jets.persistence.dto;
 
-import gov.iti.jets.persistence.dto.films.FilmDto;
 import jakarta.xml.bind.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,6 +1,6 @@
 package gov.iti.jets.persistence.dto.films;
 
-import gov.iti.jets.persistence.dto.categories.FilmCategoryIdDto;
+import gov.iti.jets.persistence.dto.categories.getFilmCategoryIdDto;
 import jakarta.xml.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
@@ -9,9 +9,9 @@ import java.util.Date;
 
 @XmlRootElement(name="FilmCategory")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FilmCategoryDto {
+public class getFilmCategoryDto {
     @XmlElement(name = "id")
-    private FilmCategoryIdDto id;
+    private getFilmCategoryIdDto id;
     @XmlElement
     @NotNull(message = "Name cannot be null")
     private  String name;
@@ -19,9 +19,9 @@ public class FilmCategoryDto {
     @PastOrPresent(message = "date can not be in the future")
     private Date lastUpdate;
 
-    public FilmCategoryDto() {
+    public getFilmCategoryDto() {
     }
-    public FilmCategoryDto(FilmCategoryIdDto id, String name, Date lastUpdate) {
+    public getFilmCategoryDto(getFilmCategoryIdDto id, String name, Date lastUpdate) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
@@ -32,10 +32,10 @@ public class FilmCategoryDto {
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-    public void  setId(FilmCategoryIdDto id){
+    public void  setId(getFilmCategoryIdDto id){
         this.id = id;
     }
-    public FilmCategoryIdDto id() {
+    public getFilmCategoryIdDto id() {
         return id;
     }
     public String name() {
