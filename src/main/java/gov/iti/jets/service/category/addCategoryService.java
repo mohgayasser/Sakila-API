@@ -8,7 +8,7 @@ import gov.iti.jets.persistence.dao.RepositoryImpl;
 import gov.iti.jets.persistence.dto.categories.CategoryDto;
 import gov.iti.jets.persistence.entity.Category;
 import gov.iti.jets.util.exceptions.validationException;
-import gov.iti.jets.util.mapper.categories.CategoryMapper;
+import gov.iti.jets.util.mapper.CategoryMapper;
 import gov.iti.jets.util.validations.validatorHandler;
 
 

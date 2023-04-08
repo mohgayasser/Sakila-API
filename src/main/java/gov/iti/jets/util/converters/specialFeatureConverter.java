@@ -14,6 +14,7 @@ public class specialFeatureConverter implements AttributeConverter<Set<String>,S
         if (attribute == null) {
             return null;
         }
+
         return String.join(",", attribute);
     }
 

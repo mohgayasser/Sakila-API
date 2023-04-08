@@ -21,7 +21,6 @@ public class LanguageDto implements Serializable {
     @XmlElement
     private  Date lastUpdate;
     @XmlElement
-
     private  Set<FilmDto> films;
 
     public LanguageDto(Short id, String name, Date lastUpdate, Set<FilmDto> films) {
@@ -48,5 +47,21 @@ public class LanguageDto implements Serializable {
 
     public Set<FilmDto> getFilms() {
         return films;
+    }
+
+    public void setId(Short id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public void setFilms(Set<FilmDto> films) {
+        this.films = films;
     }
 }

@@ -1,9 +1,7 @@
 package gov.iti.jets.persistence.dto;
 
 
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +11,7 @@ import java.util.Set;
  * A DTO for the {@link gov.iti.jets.persistence.entity.Staff} entity
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class StaffDto implements Serializable {
     @XmlAttribute
     private  Short id;
@@ -30,7 +29,6 @@ public class StaffDto implements Serializable {
     private  Boolean active;
     @XmlElement
     private  String username;
-    @XmlElement
     private  String password;
     @XmlElement
     private  Date lastUpdate;
