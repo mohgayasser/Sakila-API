@@ -1,6 +1,6 @@
 package gov.iti.jets.persistence.entity;
 
-import gov.iti.jets.persistence.dto.films.FilmDto;
+import gov.iti.jets.persistence.dto.films.getFilmDto;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -21,10 +21,9 @@ public class LanguageDto implements Serializable {
     @XmlElement
     private  Date lastUpdate;
     @XmlElement
+    private  Set<getFilmDto> films;
 
-    private  Set<FilmDto> films;
-
-    public LanguageDto(Short id, String name, Date lastUpdate, Set<FilmDto> films) {
+    public LanguageDto(Short id, String name, Date lastUpdate, Set<getFilmDto> films) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
@@ -46,7 +45,23 @@ public class LanguageDto implements Serializable {
         return lastUpdate;
     }
 
-    public Set<FilmDto> getFilms() {
+    public Set<getFilmDto> getFilms() {
         return films;
+    }
+
+    public void setId(Short id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public void setFilms(Set<getFilmDto> films) {
+        this.films = films;
     }
 }

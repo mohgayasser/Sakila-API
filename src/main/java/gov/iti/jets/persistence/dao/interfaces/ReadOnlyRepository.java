@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.dao.interfaces;
 
+import gov.iti.jets.util.exceptions.validationException;
 import gov.iti.jets.util.models.Page;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface ReadOnlyRepository<E,K> extends Repository<E,K>{
 
     List<E> findAll(Page page);
 
-    Optional<E> findById(int id);
+    Optional<E> findById(int id) throws validationException;
     Optional<E> findFromContext(K id);
 
     long count();

@@ -20,7 +20,12 @@
     </properties>
 
     <dependencies>
-      
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
@@ -76,6 +81,7 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
+
         <!-- end of validation-->
 <!--        Testing Dependencies-->
         <dependency>
@@ -112,6 +118,7 @@
             <version>2.14.2</version>
             <scope>compile</scope>
         </dependency>
+
         <!-- end of testing dependencies-->
     </dependencies>
 
@@ -129,6 +136,7 @@
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
+
                         <!-- other annotation processors -->
                     </annotationProcessorPaths>
                 </configuration>

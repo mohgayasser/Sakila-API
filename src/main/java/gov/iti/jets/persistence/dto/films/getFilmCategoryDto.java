@@ -1,35 +1,27 @@
-package gov.iti.jets.persistence.dto.categories;
+package gov.iti.jets.persistence.dto.films;
 
-import gov.iti.jets.persistence.entity.Category;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
-import java.io.Serializable;
-import java.util.Date;
+import gov.iti.jets.persistence.dto.categories.getFilmCategoryIdDto;
+import jakarta.xml.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+import java.util.Date;
 
-/**
- * A DTO for the {@link Category} entity
- */
-
-@XmlRootElement(name = "Category")
-public class CategoryDto implements Serializable{
-    @XmlAttribute(name = "id")
-    private  Integer id;
+@XmlRootElement(name="FilmCategory")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class getFilmCategoryDto {
+    @XmlElement(name = "id")
+    private getFilmCategoryIdDto id;
     @XmlElement
     @NotNull(message = "Name cannot be null")
     private  String name;
     @XmlElement
-    @PastOrPresent (message = "date can not be in the future")
-    private  Date lastUpdate;
+    @PastOrPresent(message = "date can not be in the future")
+    private Date lastUpdate;
 
-    /**
-     */
-
-    public CategoryDto(Integer id, String name, Date lastUpdate) {
+    public getFilmCategoryDto() {
+    }
+    public getFilmCategoryDto(getFilmCategoryIdDto id, String name, Date lastUpdate) {
         this.id = id;
         this.name = name;
         this.lastUpdate = lastUpdate;
@@ -40,19 +32,15 @@ public class CategoryDto implements Serializable{
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
-    public CategoryDto() {
-    }
-    public void  setId(Integer id){
+    public void  setId(getFilmCategoryIdDto id){
         this.id = id;
     }
-    public Integer id() {
+    public getFilmCategoryIdDto id() {
         return id;
     }
-
     public String name() {
         return name;
     }
-
     public Date lastUpdate() {
         return lastUpdate;
     }

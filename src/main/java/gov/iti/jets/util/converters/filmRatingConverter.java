@@ -21,10 +21,10 @@ public class filmRatingConverter implements AttributeConverter<FilmRating,String
         if (code == null) {
             return null;
         }
-
         return Stream.of(FilmRating.values())
                 .filter(c -> c.pg.equals(code))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
+
     }
 }

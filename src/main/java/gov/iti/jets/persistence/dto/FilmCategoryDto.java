@@ -1,7 +1,12 @@
 package gov.iti.jets.persistence.dto;
 
-import gov.iti.jets.persistence.dto.categories.CategoryDto;
-import gov.iti.jets.persistence.dto.films.FilmDto;
+import gov.iti.jets.persistence.dto.films.getFilmDto;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,33 +14,15 @@ import java.util.Date;
 /**
  * A DTO for the {@link gov.iti.jets.persistence.entity.FilmCategory} entity
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class FilmCategoryDto implements Serializable {
-    private final FilmCategoryIdDto id;
-    private final FilmDto film;
-    private final CategoryDto category;
-    private final Date lastUpdate;
+    private  FilmCategoryIdDto id;
+    private getFilmDto film;
+    private  Date lastUpdate;
 
-    public FilmCategoryDto(FilmCategoryIdDto id, FilmDto film, CategoryDto category, Date lastUpdate) {
-        this.id = id;
-        this.film = film;
-        this.category = category;
-        this.lastUpdate = lastUpdate;
-    }
-
-    public FilmCategoryIdDto getId() {
-        return id;
-    }
-
-    public FilmDto getFilm() {
-        return film;
-    }
-
-    public CategoryDto getCategory() {
-        return category;
-    }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
-    }
 }

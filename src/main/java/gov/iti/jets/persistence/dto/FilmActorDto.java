@@ -1,9 +1,6 @@
 package gov.iti.jets.persistence.dto;
 
-import gov.iti.jets.persistence.dto.films.FilmDto;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,40 +8,41 @@ import java.util.Date;
 /**
  * A DTO for the {@link gov.iti.jets.persistence.entity.FilmActor} entity
  */
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FilmActorDto implements Serializable {
+    @XmlElement
     private  FilmActorIdDto id;
+    @XmlElement
     private  ActorDto actor;
-
+    @XmlElement
     private  Date lastUpdate;
 
-    public void setId(FilmActorIdDto id) {
-        this.id = id;
-    }
-
-    public void setActor(ActorDto actor) {
-        this.actor = actor;
-    }
-
-    public void setLastUpdate(Date lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-    public FilmActorDto(){}
-    public FilmActorDto(FilmActorIdDto id, ActorDto actor, Date lastUpdate) {
-        this.id = id;
-        this.actor = actor;
-        this.lastUpdate = lastUpdate;
+    public FilmActorDto() {
     }
 
     public FilmActorIdDto getId() {
         return id;
     }
 
+    public void setId(FilmActorIdDto id) {
+        this.id = id;
+    }
+
     public ActorDto getActor() {
         return actor;
     }
+
+    public void setActor(ActorDto actor) {
+        this.actor = actor;
+    }
+
     public Date getLastUpdate() {
         return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

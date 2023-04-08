@@ -21,7 +21,7 @@ public class SalesByFilmCategory {
     private  int Id;
     @Size(max = 25)
     @NotNull
-    @Column(name = "category", nullable = false, length = 25)
+    @Column(name = "category.java", nullable = false, length = 25)
     private String category;
 
     @Column(name = "total_sales", precision = 27, scale = 2)

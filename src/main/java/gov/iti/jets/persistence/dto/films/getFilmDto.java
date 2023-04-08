@@ -1,9 +1,8 @@
 package gov.iti.jets.persistence.dto.films;
 
 import gov.iti.jets.persistence.dto.FilmActorDto;
-import gov.iti.jets.persistence.dto.InventoryDto;
-import gov.iti.jets.persistence.entity.*;
 import gov.iti.jets.persistence.entity.enums.FilmRating;
+import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
@@ -17,19 +16,19 @@ import java.util.Set;
 
 @XmlRootElement(name="film")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FilmDto implements Serializable {
-        @XmlAttribute(name = "id")
+public class getFilmDto implements Serializable {
+        @XmlAttribute(name = "filmId")
         private    Integer id;
-        @XmlAttribute(name = "title")
+        @XmlAttribute(name = "filmTitle")
         private  String title;
-        @XmlElement
+        @XmlElement(name = "filmDescription")
         private  String description;
         @XmlElement
         private  Integer releaseYear;
-        @XmlElement
-        private  LanguageDto language;
-        @XmlElement
-        private  LanguageDto orignalLanguage;
+        @XmlElement(name = "language")
+        private getFilmLanguageDto language;
+        @XmlElement(name = "orignalLanguage",type = JAXBElement.class, required = false)
+        private getFilmLanguageDto orignalLanguage;
         @XmlElement
         private  Short rentalDuration;
          @XmlElement
@@ -38,17 +37,28 @@ public class FilmDto implements Serializable {
         private  Integer length;
         @XmlElement
         private  BigDecimal replacementCost;
-        private  FilmRating rating;
-        @XmlElement
-        private  Date lastUpdate;
-
-
          @XmlElement
-        private  Set<InventoryDto> inventories;
+        private  FilmRating rating;
+        @XmlElement(name="filmLastUpdate")
+        private  Date lastUpdate;
+         @XmlElement
+        private  Set<getInventoryDto> inventories;
         @XmlElement
         private  Set<FilmActorDto> filmActors;
-    //    private Set<FilmCategoryDto> filmCategories ;
-        public FilmDto(){}
+        @XmlElement( name = "filmCategories")
+       private Set<getFilmCategoryDto> filmCategories ;
+        @XmlElement
+        private   Set<String>specialFeatures;
+
+    public Set<String> getSpecialFeatures() {
+        return specialFeatures;
+    }
+
+    public void setSpecialFeatures(Set<String> specialFeatures) {
+        this.specialFeatures = specialFeatures;
+    }
+
+    public getFilmDto(){}
 
         public Integer getId() {
                 return id;
@@ -82,19 +92,19 @@ public class FilmDto implements Serializable {
                 this.releaseYear = releaseYear;
         }
 
-        public LanguageDto getLanguage() {
+        public getFilmLanguageDto getLanguage() {
                 return language;
         }
 
-        public void setLanguage(LanguageDto language) {
+        public void setLanguage(getFilmLanguageDto language) {
                 this.language = language;
         }
 
-        public LanguageDto getOrignalLanguage() {
+        public getFilmLanguageDto getOrignalLanguage() {
                 return orignalLanguage;
         }
 
-        public void setOrignalLanguage(LanguageDto orignalLanguage) {
+        public void setOrignalLanguage(getFilmLanguageDto orignalLanguage) {
                 this.orignalLanguage = orignalLanguage;
         }
 
@@ -146,11 +156,11 @@ public class FilmDto implements Serializable {
                 this.lastUpdate = lastUpdate;
         }
 
-        public Set<InventoryDto> getInventories() {
+        public Set<getInventoryDto> getInventories() {
                 return inventories;
         }
 
-        public void setInventories(Set<InventoryDto> inventories) {
+        public void setInventories(Set<getInventoryDto> inventories) {
                 this.inventories = inventories;
         }
 
@@ -161,4 +171,13 @@ public class FilmDto implements Serializable {
         public void setFilmActors(Set<FilmActorDto> filmActors) {
                 this.filmActors = filmActors;
         }
+
+        public Set<getFilmCategoryDto> getFilmCategories() {
+            return filmCategories;
+        }
+
+        public void setFilmCategories(Set<getFilmCategoryDto> filmCategories) {
+            this.filmCategories = filmCategories;
+        }
+
 }
