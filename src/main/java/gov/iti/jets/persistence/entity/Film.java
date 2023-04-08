@@ -1,8 +1,12 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import gov.iti.jets.persistence.entity.enums.FilmRating;
+import gov.iti.jets.util.converters.filmRatingConverter;
+import gov.iti.jets.util.converters.specialFeatureConverter;
 import jakarta.persistence.*;
-import gov.iti.jets.service.util.*;
+
 import java.math.BigDecimal;
 
 import java.util.Date;

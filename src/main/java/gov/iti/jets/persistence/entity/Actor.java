@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -25,6 +26,7 @@ public class Actor {
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "actor")
+    @JsonBackReference
     private Set<FilmActor> filmActors = new LinkedHashSet<>();
 
     public Integer getId() {

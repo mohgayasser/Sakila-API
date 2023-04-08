@@ -1,10 +1,9 @@
-package gov.iti.jets.service.util;
+package gov.iti.jets.util.converters;
 
 import gov.iti.jets.persistence.entity.enums.FilmRating;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-import javax.naming.directory.Attributes;
 import java.util.stream.Stream;
 
 @Converter

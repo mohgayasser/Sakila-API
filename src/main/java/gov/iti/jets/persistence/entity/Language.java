@@ -1,5 +1,7 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -21,6 +23,7 @@ public class Language {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
     @OneToMany(mappedBy = "language")
+    @JsonIgnore
     private Set<Film> films = new LinkedHashSet<>();
 
     public Set<Film> getFilms() {

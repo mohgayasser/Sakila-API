@@ -1,4 +1,4 @@
-package gov.iti.jets.service.validations;
+package gov.iti.jets.util.validations;
 
 import java.util.Set;
 import java.util.stream.Collectors;

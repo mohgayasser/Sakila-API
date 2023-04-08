@@ -1,4 +1,4 @@
-package gov.iti.jets.service.mapper.categories;
+package gov.iti.jets.util.mapper.categories;
 
 import gov.iti.jets.persistence.dto.categories.CategoryDto;
 import gov.iti.jets.persistence.entity.Category;

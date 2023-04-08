@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -22,6 +23,7 @@ public class Staff {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "address_id", nullable = false)
+
     private Address address;
 
     @Column(name = "picture")

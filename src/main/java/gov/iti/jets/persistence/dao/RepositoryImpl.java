@@ -1,12 +1,10 @@
 package gov.iti.jets.persistence.dao;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
 import gov.iti.jets.persistence.dao.interfaces.ReadOnlyRepository;
-import gov.iti.jets.persistence.dao.interfaces.Repository;
-import gov.iti.jets.service.models.Page;
+import gov.iti.jets.util.models.Page;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;

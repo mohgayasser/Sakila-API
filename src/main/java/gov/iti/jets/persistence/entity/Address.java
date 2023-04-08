@@ -1,5 +1,8 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -25,6 +28,7 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "city_id", nullable = false)
+    @JsonIgnore
     private City city;
 
     @Column(name = "postal_code", length = 10)
@@ -38,12 +42,15 @@ public class Address {
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private Set<Staff> staff = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private Set<Store> stores = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "address")
+    @JsonIgnore
     private Set<Customer> customers = new LinkedHashSet<>();
 
     public Integer getId() {

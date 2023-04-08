@@ -71,6 +71,11 @@
             <artifactId>javax.el</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
         <!-- end of validation-->
 <!--        Testing Dependencies-->
         <dependency>
@@ -100,7 +105,14 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-<!-- end of testing dependencies-->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.14.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- end of testing dependencies-->
     </dependencies>
 
     <build>

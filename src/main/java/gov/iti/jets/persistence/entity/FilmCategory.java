@@ -1,5 +1,8 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -8,13 +11,16 @@ import java.util.Date;
 @Table(name = "film_category")
 public class FilmCategory {
     @EmbeddedId
-    private FilmCategoryId id;
+    private FilmCategoryId id = new FilmCategoryId();
 
     @MapsId("filmId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "film_id", nullable = false)
+    @JsonIgnore
     private Film film;
 
+
+    @JsonIgnore
     @MapsId("categoryId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)

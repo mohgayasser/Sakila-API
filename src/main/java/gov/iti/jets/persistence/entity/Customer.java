@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -16,6 +17,7 @@ public class Customer {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "store_id", nullable = false)
+
     private Store store;
 
     @Column(name = "first_name", nullable = false, length = 45)
@@ -46,6 +48,7 @@ public class Customer {
     private Set<Payment> payments = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "customer")
+
     private Set<Rental> rentals = new LinkedHashSet<>();
 
     public Customer() {

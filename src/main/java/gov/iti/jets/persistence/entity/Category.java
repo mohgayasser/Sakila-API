@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -20,7 +21,8 @@ public class Category {
     @Column(name = "last_update", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private Set<FilmCategory> filmCategories = new LinkedHashSet<>();
 

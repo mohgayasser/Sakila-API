@@ -1,5 +1,7 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -27,12 +29,14 @@ public class Store {
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "store")
+
     private Set<Inventory> inventories = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "store")
     private Set<Staff> staff = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "store")
+    @JsonIgnore
     private Set<Customer> customers = new LinkedHashSet<>();
 
     public Short getId() {

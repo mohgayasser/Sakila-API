@@ -1,5 +1,8 @@
 package gov.iti.jets.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -16,10 +19,12 @@ public class Inventory {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "film_id", nullable = false)
+    @JsonIgnore
     private Film film;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "store_id", nullable = false)
+    @JsonIgnore
     private Store store;
 
     @Column(name = "last_update", nullable = false)
@@ -27,6 +32,7 @@ public class Inventory {
     private Date lastUpdate;
 
     @OneToMany(mappedBy = "inventory")
+    @JsonIgnore
     private Set<Rental> rentals = new LinkedHashSet<>();
 
     public Integer getId() {
