@@ -1,6 +1,7 @@
-package gov.iti.jets.persistence.entity;
+package gov.iti.jets.persistence.dto;
 
 import gov.iti.jets.persistence.dto.films.getFilmDto;
+import gov.iti.jets.persistence.entity.Language;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;

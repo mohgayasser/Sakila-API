@@ -2,14 +2,15 @@ package gov.iti.jets.service.category;
 
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
+
 
 import gov.iti.jets.persistence.dao.RepositoryImpl;
 import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.persistence.entity.Category;
-import gov.iti.jets.util.exceptions.validationException;
-import gov.iti.jets.util.mapper.CategoryMapper;
-import gov.iti.jets.util.validations.validatorHandler;
+import gov.iti.jets.service.util.exceptions.validationException;
+import gov.iti.jets.service.util.mapper.CategoryMapper;
+import gov.iti.jets.service.util.validations.validatorHandler;
+import jakarta.validation.ConstraintViolation;
 
 
 public class addCategoryService {

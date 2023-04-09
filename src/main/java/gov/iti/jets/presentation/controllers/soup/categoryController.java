@@ -1,8 +1,8 @@
-package gov.iti.jets.api.soup.controllers;
+package gov.iti.jets.presentation.controllers.soup;
 
 import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.service.category.addCategoryService;
-import gov.iti.jets.util.exceptions.validationException;
+import gov.iti.jets.service.util.exceptions.validationException;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;

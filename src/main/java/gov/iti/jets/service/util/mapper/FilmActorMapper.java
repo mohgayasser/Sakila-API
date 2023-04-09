@@ -1,4 +1,4 @@
-package gov.iti.jets.util.mapper;
+package gov.iti.jets.service.util.mapper;
 
 import gov.iti.jets.persistence.dto.ActorDto;
 import gov.iti.jets.persistence.dto.FilmActorDto;

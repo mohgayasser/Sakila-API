@@ -1,13 +1,17 @@
 package gov.iti.jets.persistence.dao;
 
-import gov.iti.jets.persistence.dao.RepositoryImpl;
 import gov.iti.jets.persistence.dao.interfaces.filmDao;
+import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.persistence.entity.Film;
 import gov.iti.jets.persistence.views.FilmList;
-import gov.iti.jets.util.models.Page;
+import gov.iti.jets.presentation.dto.OperationalFilmDto;
+import gov.iti.jets.service.util.exceptions.validationException;
+import gov.iti.jets.service.util.models.Page;
+import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.persistence.Query;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class filmImpl extends RepositoryImpl<Film,Integer> implements filmDao {
@@ -35,6 +39,8 @@ public class filmImpl extends RepositoryImpl<Film,Integer> implements filmDao {
         List<FilmList> filmList = query.getResultList();
         return  filmList;
     }
+
+
 
 
 }

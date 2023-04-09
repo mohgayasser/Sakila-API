@@ -1,7 +1,7 @@
 package gov.iti.jets.persistence.dao.interfaces;
 
-import gov.iti.jets.util.exceptions.validationException;
-import gov.iti.jets.util.models.Page;
+import gov.iti.jets.service.util.exceptions.validationException;
+import gov.iti.jets.service.util.models.Page;
 
 import java.util.List;
 import java.util.Optional;

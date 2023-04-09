@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "film_actor")
 public class FilmActor {
     @EmbeddedId
-    private FilmActorId id;
+    private FilmActorId id = new FilmActorId();
 
     @MapsId("actorId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -28,6 +28,20 @@ public class FilmActor {
     @Column(name = "last_update", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
+
+    public FilmActor(FilmActorId id, Actor actor, Film film, Date lastUpdate) {
+        this.id = id;
+        this.actor = actor;
+        this.film = film;
+        this.lastUpdate = lastUpdate;
+    }
+    public FilmActor(Actor actor, Film film, Date lastUpdate) {
+
+        this.actor = actor;
+        this.film = film;
+        this.lastUpdate = lastUpdate;
+    }
+    public FilmActor(){}
 
     public FilmActorId getId() {
         return id;

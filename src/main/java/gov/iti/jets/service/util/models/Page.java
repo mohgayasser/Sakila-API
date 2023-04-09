@@ -1,4 +1,4 @@
-package gov.iti.jets.util.models;
+package gov.iti.jets.service.util.models;
 
 public class Page {
     int pageNumber;

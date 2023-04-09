@@ -1,17 +1,21 @@
-package gov.iti.jets.api.soup.controllers;
+package gov.iti.jets.presentation.controllers.soup;
 
 import gov.iti.jets.persistence.dto.films.FilmListDto;
+import gov.iti.jets.presentation.dto.OperationalFilmDto;
 import gov.iti.jets.persistence.dto.films.getFilmDto;
-import gov.iti.jets.service.film.getFilmService;
-import gov.iti.jets.util.exceptions.validationException;
-import gov.iti.jets.util.models.Page;
+import gov.iti.jets.service.film.*;
+import gov.iti.jets.service.util.exceptions.validationException;
+import gov.iti.jets.service.util.models.Page;
+import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
+import jakarta.validation.ConstraintViolation;
 
 import java.util.List;
+import java.util.Set;
 
-@WebService
+@WebService (targetNamespace = "filmController")
 public class filmController {
     @WebMethod
     public  List<getFilmDto> getFilmByName( @WebParam(name = "partOfFilmName") String filmName,@WebParam(name = "start") Integer start ,@WebParam(name="limit") Integer limit) throws validationException {
@@ -39,6 +43,7 @@ public class filmController {
     }
     @WebMethod
     public List<FilmListDto> getFilmList(@WebParam(name = "startPage") int start,@WebParam(name = "pageSize")int limit) throws validationException {
+
         if (limit<1){
             throw new validationException("the page Size of objects must be at least 1");
         }if (start<1){
@@ -50,5 +55,18 @@ public class filmController {
         return filmListDto;
 
 
+    }
+    @WebMethod()
+    public boolean insertFilm(@WebParam(name = "film",mode = WebParam.Mode.IN)OperationalFilmDto filmDto) throws validationException {
+        System.out.println(filmDto);
+        validatorHandler handler = new validatorHandler();
+        Set<ConstraintViolation<OperationalFilmDto>> violations = handler.getValidation().validate(filmDto);
+        if(violations.size() >0){
+            String msgs=handler.getErrorMessage(violations);
+            throw new validationException(msgs);
+        }
+        insertFilmService insertFilmService = new insertFilmService();
+        boolean result = insertFilmService.insertFilm(filmDto);
+        return result;
     }
 }

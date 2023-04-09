@@ -1,4 +1,4 @@
-package gov.iti.jets.util.mapper;
+package gov.iti.jets.service.util.mapper;
 
 import gov.iti.jets.persistence.dto.AddressDto;
 import gov.iti.jets.persistence.entity.Address;

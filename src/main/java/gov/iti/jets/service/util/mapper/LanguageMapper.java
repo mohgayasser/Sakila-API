@@ -1,12 +1,11 @@
-package gov.iti.jets.util.mapper;
+package gov.iti.jets.service.util.mapper;
 
 import gov.iti.jets.persistence.dto.FilmCategoryDto;
 import gov.iti.jets.persistence.entity.FilmCategory;
 import gov.iti.jets.persistence.entity.Language;
-import gov.iti.jets.persistence.entity.LanguageDto;
+import gov.iti.jets.persistence.dto.LanguageDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
