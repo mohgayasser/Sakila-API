@@ -14,7 +14,7 @@ public class FilmActor {
     private FilmActorId id = new FilmActorId();
 
     @MapsId("actorId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "actor_id", nullable = false)
     @JsonIgnore
     private Actor actor;

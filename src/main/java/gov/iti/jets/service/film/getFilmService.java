@@ -1,10 +1,9 @@
 package gov.iti.jets.service.film;
-import gov.iti.jets.persistence.dao.RepositoryImpl;
-import gov.iti.jets.persistence.dao.filmImpl;
 import gov.iti.jets.persistence.dto.films.FilmListDto;
 import  gov.iti.jets.persistence.entity.Film;
 import gov.iti.jets.persistence.dto.films.getFilmDto;
 import gov.iti.jets.persistence.views.FilmList;
+import gov.iti.jets.service.interfaces.filmService;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.mapper.FilmListMapper;
 import gov.iti.jets.service.util.mapper.FilmMapper;
@@ -14,9 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class getFilmService {
-    RepositoryImpl<Film, Integer> repo = new RepositoryImpl<>(Film.class);
-    filmImpl film = new filmImpl();
+public class getFilmService implements filmService {
+
     public List<getFilmDto> getFilmByName(String FilmTitle, Page page) {
 
 

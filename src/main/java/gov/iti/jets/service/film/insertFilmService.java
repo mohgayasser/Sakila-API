@@ -1,10 +1,10 @@
 package gov.iti.jets.service.film;
 
 import gov.iti.jets.persistence.dao.RepositoryImpl;
-import gov.iti.jets.persistence.dao.filmImpl;
 import gov.iti.jets.persistence.entity.*;
 import gov.iti.jets.persistence.dto.films.OperationalFilmDto;
 import gov.iti.jets.presentation.mappers.OperationalFilmMapper;
+import gov.iti.jets.service.interfaces.filmService;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.mapper.OperationalToFilmMapper;
 
@@ -13,17 +13,17 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class insertFilmService {
-    RepositoryImpl<Film, Integer> filmRepo = new RepositoryImpl<>(Film.class);
+public class insertFilmService  implements filmService {
+
     RepositoryImpl<Language, Integer> languageRepo = new RepositoryImpl<>(Language.class);
     RepositoryImpl<Actor, Integer> actorRepo = new RepositoryImpl<>(Actor.class);
     RepositoryImpl<Store, Integer> storeRepo = new RepositoryImpl<>(Store.class);
-    RepositoryImpl<Inventory, Integer> inventoryRepo = new RepositoryImpl<>(Inventory.class);
-    RepositoryImpl<FilmActor, Integer> filmActorRepo = new RepositoryImpl<>(FilmActor.class);
+    RepositoryImpl<Category, Integer> categoryRepo = new RepositoryImpl<>(Category.class);
+    RepositoryImpl<FilmActor, Integer> FilmActorRepo = new RepositoryImpl<>(FilmActor.class);
+    RepositoryImpl<FilmCategory, Integer> FilmCategoryRepo = new RepositoryImpl<>(FilmCategory.class);
 
-    filmImpl film = new filmImpl();
     public boolean insertFilm(gov.iti.jets.presentation.dto.OperationalFilmDto filmDto) throws validationException {
-
+        System.out.println(filmDto);
         OperationalFilmDto operationalFilmDto =OperationalFilmMapper.INSTANCE.presentationToService(filmDto);
         Film newFilm = OperationalToFilmMapper.INSTANCE.OperationalToFilm(operationalFilmDto);
         Optional<Language> FilmLanguage = languageRepo.findById(operationalFilmDto.getLanguageId());
@@ -39,40 +39,68 @@ public class insertFilmService {
             newFilm.setOriginalLanguage(filmOrignalLanguage.get());
         }
         newFilm.setLastUpdate(new Date());
-        Film addedFilm = filmRepo.create(newFilm);
-        System.out.println("added film is "+addedFilm);
+
+        newFilm.setInventories(insertInventoryList(newFilm,operationalFilmDto));
+
+
+        Film addedFilm = film.create(newFilm);
+        if(addedFilm == null) {
+            throw new validationException("invalid data please check your data with required then try again");
+        }
+        fillCategory(operationalFilmDto,addedFilm);
+        fillFimActors(operationalFilmDto,addedFilm);
+        System.out.println(addedFilm);
         return true;
     }
-    private  boolean insertInventory( Film film,OperationalFilmDto operationalFilmDto){
+    private  Set<Inventory> insertInventoryList( Film film,OperationalFilmDto operationalFilmDto){
+        Set<Inventory> inventories = new HashSet<>();
         operationalFilmDto.getStoresIds().forEach(store->{
             try {
                 Optional<Store> filmStore = storeRepo.findById(store);
                 if(filmStore.isPresent()) {
                     Inventory inventory = new Inventory(film, filmStore.get(), new Date());
-                    Inventory addedInventory = inventoryRepo.create(inventory);
+                   inventories.add(inventory);
                 }
             } catch (validationException e) {
                 throw new RuntimeException(e);
             }
         });
 
-        return true;
+        return inventories;
     }
-    private boolean insertStoredata(OperationalFilmDto operationalFilmDto,Film film){
+    private void fillFimActors(OperationalFilmDto operationalFilmDto,Film film){
         Set<FilmActor> actors =new HashSet<>();
 
         operationalFilmDto.getFilmActorsIds().forEach(actor->{
             try {
                 Optional<Actor> filmActor = actorRepo.findById(actor);
                 if(filmActor.isPresent()) {
+                    System.out.println(filmActor);
                     FilmActor newFilmActor = new FilmActor(filmActor.get(), film, new Date());
-                    FilmActor addedFilmActor = filmActorRepo.create(newFilmActor);
+                    FilmActor actor1 = FilmActorRepo.update(newFilmActor);
 
                 }
             } catch (validationException e) {
                 throw new RuntimeException(e);
             }
         });
-        return  true;
+    }
+
+    private void fillCategory(OperationalFilmDto operationalFilmDto,Film film){
+        Set<FilmCategory> filmCategories =new HashSet<>();
+
+        operationalFilmDto.getFilmCategoriesIds().forEach(category->{
+            try {
+                Optional<Category> filmCategory = categoryRepo.findById(category);
+                System.out.println("out from category "+filmCategory.isPresent()+" isempty "+filmCategory.isEmpty());
+                if(filmCategory.isPresent()) {
+                    FilmCategory categoryObj = new FilmCategory(film,filmCategory.get(), new Date());
+                    FilmCategory category1 =FilmCategoryRepo.update(categoryObj);
+
+                }
+            } catch (validationException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

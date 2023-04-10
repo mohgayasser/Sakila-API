@@ -1,9 +1,7 @@
-package gov.iti.jets.persistence.dto;
+package gov.iti.jets.persistence.dto.customer;
 
 
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,25 +11,25 @@ import java.util.Set;
  * A DTO for the {@link gov.iti.jets.persistence.entity.Customer} entity
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CustomerDto implements Serializable {
     @XmlAttribute
     private  Integer id;
-    @XmlAttribute
+    @XmlElement
     private  String firstName;
-    @XmlAttribute
+    @XmlElement
     private  String lastName;
     @XmlElement
     private  String email;
-    @XmlAttribute
+    @XmlElement
     private  Boolean active;
     @XmlElement
     private  Date createDate;
     @XmlElement
     private  Date lastUpdate;
-    @XmlElement
-    private  Set<RentalDto> rentals;
+
     public CustomerDto(){}
-    public CustomerDto(Integer id, String firstName, String lastName, String email, Boolean active, Date createDate, Date lastUpdate, Set<RentalDto> rentals) {
+    public CustomerDto(Integer id, String firstName, String lastName, String email, Boolean active, Date createDate, Date lastUpdate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,7 +37,6 @@ public class CustomerDto implements Serializable {
         this.active = active;
         this.createDate = createDate;
         this.lastUpdate = lastUpdate;
-        this.rentals = rentals;
     }
 
     public Integer getId() {
@@ -70,7 +67,34 @@ public class CustomerDto implements Serializable {
         return lastUpdate;
     }
 
-    public Set<RentalDto> getRentals() {
-        return rentals;
+
+    public void setId(Integer id) {
+        this.id = id;
     }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+
 }

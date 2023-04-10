@@ -69,4 +69,14 @@ public class Actor {
         this.filmActors = filmActors;
     }
 
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", lastUpdate=" + lastUpdate +
+                ", filmActors=" + filmActors +
+                '}';
+    }
 }

@@ -91,7 +91,7 @@ public class RepositoryImpl<E, K> implements ReadOnlyRepository<E, K> {
         try {
              ew = _entityManager.find(type, id);
         }catch (Exception e){
-            throw new validationException("this id ("+id+") doesn't exist in our system");
+            throw new validationException("this id ("+id+") in "+type.getName()+" doesn't exist in our system");
         }
         return Optional.ofNullable(ew);
     }

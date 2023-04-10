@@ -1,5 +1,6 @@
 package gov.iti.jets.presentation.controllers.soup;
 
+import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.films.FilmListDto;
 import gov.iti.jets.presentation.dto.OperationalFilmDto;
 import gov.iti.jets.persistence.dto.films.getFilmDto;
@@ -68,5 +69,33 @@ public class filmController {
         insertFilmService insertFilmService = new insertFilmService();
         boolean result = insertFilmService.insertFilm(filmDto);
         return result;
+    }
+    @WebMethod
+    public Boolean checkFilmExistance(@WebParam (name = "FilmId") int id) throws validationException {
+        Boolean result = null;
+        if(id<0){
+            throw new validationException("You need to enter valid id which for ex starting from 1");
+        }
+        checkFilmInInventoryService check =new checkFilmInInventoryService();
+        result = check.isFilmInStock(id);
+        return result;
+    }
+    @WebMethod
+    public CustomerDto getFilmRenter(@WebParam (name = "FilmId") int id) throws validationException {
+        if(id<0){
+            throw new validationException("You need to enter valid id which for ex starting from 1");
+        }
+        getFilmRenterService getFilmRenterService =new getFilmRenterService();
+        CustomerDto customerDto = getFilmRenterService.FilmRenter(id);
+        if(customerDto !=null){
+            return  customerDto;
+
+        }
+        else {
+            throw new validationException("this film isn't renting to any customer recently");
+
+        }
+
+
     }
 }

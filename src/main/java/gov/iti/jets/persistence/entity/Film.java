@@ -62,13 +62,14 @@ public class Film {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 
-    @OneToMany(mappedBy = "film")
+
+    @OneToMany(mappedBy = "film",cascade = { CascadeType.PERSIST, CascadeType.MERGE },orphanRemoval = true)
     private Set<Inventory> inventories = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film",cascade = { CascadeType.MERGE },orphanRemoval = true)
     private Set<FilmActor> filmActors = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film",cascade = {  CascadeType.MERGE },orphanRemoval = true)
     private Set<FilmCategory> filmCategories = new LinkedHashSet<>();
 
     public Integer getId() {

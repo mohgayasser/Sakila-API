@@ -38,7 +38,7 @@ public class OperationalFilmDto implements Serializable {
     @NotNull(message = "You Need to Enter a Rental Rate ")
     @Min(0)
     @XmlElement
-    private     Float rentalRate;
+    private Float rentalRate;
 
     @NotNull(message = "you need to enter a length of this film")
     @Min(0)
@@ -47,12 +47,13 @@ public class OperationalFilmDto implements Serializable {
 
     @NotNull (message = "you need to enter a Replacement Cost for this film")
     @Min(0)
-
+    @Digits(integer=5, fraction=2,message = "Replacement cost need to be Decimal number 5 integer digits and 2 fractions after point")
     @XmlElement
     private  Float replacementCost;
 
-    @NotNull (message = "you need to enter Rating for this film ex: G,PD,PG-13,R,NC-17")
+    @NotNull (message = "you need to enter Rating for this film ex: G,PG,PG-13,R,NC-17")
     @NotBlank
+    @Pattern(regexp = "^(G|PG|PG-13|R|NC_17)$" ,message = "you need to enter on of next values for rating variable ( G,PD,PG-13,R,NC-17)")
     @XmlElement
     private String rating;
 
