@@ -35,6 +35,22 @@ public class Inventory {
     @JsonIgnore
     private Set<Rental> rentals = new LinkedHashSet<>();
 
+    public Inventory(Integer id, Film film, Store store, Date lastUpdate) {
+        this.id = id;
+        this.film = film;
+        this.store = store;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Inventory(Film film, Store store, Date lastUpdate) {
+        this.film = film;
+        this.store = store;
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Inventory() {
+    }
+
     public Integer getId() {
         return id;
     }

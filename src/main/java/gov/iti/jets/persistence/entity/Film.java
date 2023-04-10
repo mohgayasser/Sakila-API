@@ -1,11 +1,10 @@
 package gov.iti.jets.persistence.entity;
 
 import gov.iti.jets.persistence.entity.enums.FilmRating;
-import gov.iti.jets.util.converters.filmRatingConverter;
-import gov.iti.jets.util.converters.specialFeatureConverter;
+import gov.iti.jets.service.util.converters.filmRatingConverter;
+import gov.iti.jets.service.util.converters.specialFeatureConverter;
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -41,13 +40,13 @@ public class Film {
     private Short rentalDuration;
 
     @Column(name = "rental_rate", nullable = false, precision = 4, scale = 2)
-    private BigDecimal rentalRate;
+    private  Float rentalRate;
 
     @Column(name = "length", columnDefinition = "SMALLINT UNSIGNED")
     private Integer length;
 
     @Column(name = "replacement_cost", nullable = false, precision = 5, scale = 2)
-    private BigDecimal replacementCost;
+    private   Float replacementCost;
 
 
     @Column(name = "rating")
@@ -63,13 +62,14 @@ public class Film {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdate;
 
-    @OneToMany(mappedBy = "film")
+
+    @OneToMany(mappedBy = "film",cascade = { CascadeType.PERSIST, CascadeType.MERGE },orphanRemoval = true)
     private Set<Inventory> inventories = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film",cascade = { CascadeType.MERGE },orphanRemoval = true)
     private Set<FilmActor> filmActors = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film",cascade = {  CascadeType.MERGE },orphanRemoval = true)
     private Set<FilmCategory> filmCategories = new LinkedHashSet<>();
 
     public Integer getId() {
@@ -128,11 +128,11 @@ public class Film {
         this.rentalDuration = rentalDuration;
     }
 
-    public BigDecimal getRentalRate() {
+    public   Float getRentalRate() {
         return rentalRate;
     }
 
-    public void setRentalRate(BigDecimal rentalRate) {
+    public void setRentalRate(  Float rentalRate) {
         this.rentalRate = rentalRate;
     }
 
@@ -144,11 +144,11 @@ public class Film {
         this.length = length;
     }
 
-    public BigDecimal getReplacementCost() {
+    public   Float getReplacementCost() {
         return replacementCost;
     }
 
-    public void setReplacementCost(BigDecimal replacementCost) {
+    public void setReplacementCost(  Float replacementCost) {
         this.replacementCost = replacementCost;
     }
 
@@ -200,4 +200,25 @@ public class Film {
         this.filmCategories = filmCategories;
     }
 
+    @Override
+    public String toString() {
+        return "Film{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", releaseYear=" + releaseYear +
+                ", language=" + language +
+                ", originalLanguage=" + originalLanguage +
+                ", rentalDuration=" + rentalDuration +
+                ", rentalRate=" + rentalRate +
+                ", length=" + length +
+                ", replacementCost=" + replacementCost +
+                ", rating=" + rating +
+                ", specialFeatures=" + specialFeatures +
+                ", lastUpdate=" + lastUpdate +
+                ", inventories=" + inventories +
+                ", filmActors=" + filmActors +
+                ", filmCategories=" + filmCategories +
+                '}';
+    }
 }

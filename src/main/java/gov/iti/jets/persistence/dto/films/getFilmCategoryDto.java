@@ -1,10 +1,10 @@
 package gov.iti.jets.persistence.dto.films;
 
 import gov.iti.jets.persistence.dto.categories.getFilmCategoryIdDto;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.xml.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @XmlRootElement(name="FilmCategory")

@@ -1,12 +1,11 @@
 package gov.iti.jets.persistence.dao;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import gov.iti.jets.persistence.dao.interfaces.ReadOnlyRepository;
-import gov.iti.jets.util.exceptions.validationException;
-import gov.iti.jets.util.models.Page;
+import gov.iti.jets.service.util.exceptions.validationException;
+import gov.iti.jets.service.util.models.Page;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -92,7 +91,7 @@ public class RepositoryImpl<E, K> implements ReadOnlyRepository<E, K> {
         try {
              ew = _entityManager.find(type, id);
         }catch (Exception e){
-            throw new validationException("this id doesn't exist in our system");
+            throw new validationException("this id ("+id+") in "+type.getName()+" doesn't exist in our system");
         }
         return Optional.ofNullable(ew);
     }

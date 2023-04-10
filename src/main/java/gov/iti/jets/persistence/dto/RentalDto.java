@@ -1,9 +1,7 @@
 package gov.iti.jets.persistence.dto;
 
 
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +10,7 @@ import java.util.Date;
  * A DTO for the {@link gov.iti.jets.persistence.entity.Rental} entity
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class RentalDto implements Serializable {
     @XmlAttribute
     private  Integer id;
@@ -46,5 +45,21 @@ public class RentalDto implements Serializable {
 
     public Date getLastUpdate() {
         return lastUpdate;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setRentalDate(Date rentalDate) {
+        this.rentalDate = rentalDate;
+    }
+
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 }

@@ -22,9 +22,21 @@ public class FilmCategory {
 
     @JsonIgnore
     @MapsId("categoryId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+    public FilmCategory(){}
+    public FilmCategory(Film film, Category category, Date lastUpdate) {
+        this.film = film;
+        this.category = category;
+        this.lastUpdate = lastUpdate;
+    }
+    public FilmCategory(FilmCategoryId id, Film film, Category category, Date lastUpdate) {
+        this.id = id;
+        this.film = film;
+        this.category = category;
+        this.lastUpdate = lastUpdate;
+    }
 
     @Column(name = "last_update", nullable = false)
     private Date lastUpdate;
@@ -61,4 +73,13 @@ public class FilmCategory {
         this.lastUpdate = lastUpdate;
     }
 
+    @Override
+    public String toString() {
+        return "FilmCategory{" +
+                "id=" + id +
+                ", film=" + film +
+                ", category=" + category +
+                ", lastUpdate=" + lastUpdate +
+                '}';
+    }
 }

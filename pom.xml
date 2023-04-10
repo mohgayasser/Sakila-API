@@ -59,6 +59,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${org.mapstruct.version}</version>
+
         </dependency>
         <!--validator-->
         <dependency>
@@ -79,7 +80,7 @@
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
+            <version>2.4.0-b180830.0359</version>
         </dependency>
 
         <!-- end of validation-->
@@ -119,6 +120,7 @@
             <scope>compile</scope>
         </dependency>
 
+
         <!-- end of testing dependencies-->
     </dependencies>
 
@@ -131,6 +133,7 @@
                 <configuration>
                     <release>17</release>
                     <annotationProcessorPaths>
+
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>

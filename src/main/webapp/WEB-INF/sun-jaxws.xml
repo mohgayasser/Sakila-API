@@ -4,12 +4,12 @@
 
     <endpoint
         name="CategoryController"
-        implementation="gov.iti.jets.api.soup.controllers.categoryController"
+        implementation="gov.iti.jets.presentation.controllers.soup.categoryController"
         url-pattern="/ws/categories" />
 
     <endpoint
             name="filmController"
-            implementation="gov.iti.jets.api.soup.controllers.filmController"
+            implementation="gov.iti.jets.presentation.controllers.soup.filmController"
             url-pattern="/ws/films" />
 
 

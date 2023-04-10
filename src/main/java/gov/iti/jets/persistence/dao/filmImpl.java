@@ -1,13 +1,18 @@
 package gov.iti.jets.persistence.dao;
 
-import gov.iti.jets.persistence.dao.RepositoryImpl;
 import gov.iti.jets.persistence.dao.interfaces.filmDao;
+import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.persistence.entity.Film;
 import gov.iti.jets.persistence.views.FilmList;
-import gov.iti.jets.util.models.Page;
+import gov.iti.jets.presentation.dto.OperationalFilmDto;
+import gov.iti.jets.service.util.exceptions.validationException;
+import gov.iti.jets.service.util.models.Page;
+import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.persistence.Query;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 
 public class filmImpl extends RepositoryImpl<Film,Integer> implements filmDao {
@@ -34,6 +39,25 @@ public class filmImpl extends RepositoryImpl<Film,Integer> implements filmDao {
         query.setMaxResults(page.getPageSize());
         List<FilmList> filmList = query.getResultList();
         return  filmList;
+    }
+
+    @Override
+    public Optional<Boolean> isFilmInStock(int filmId) {
+        String sqlQuery = "SELECT inventory_in_stock(:id) FROM dual";
+        Query query = _entityManager.createNativeQuery(sqlQuery);
+        query.setParameter("id",filmId);
+        Boolean result = (Boolean) query.getSingleResult();
+
+        return  Optional.ofNullable(result);
+    }
+
+    @Override
+    public Optional<Integer> getFilmRenter(int filmId) {
+        String sqlQuery = "SELECT inventory_held_by_customer(:id) FROM dual";
+        Query query = _entityManager.createNativeQuery(sqlQuery);
+        query.setParameter("id",filmId);
+        Integer result = (Integer) query.getSingleResult();
+        return  Optional.ofNullable(result);
     }
 
 

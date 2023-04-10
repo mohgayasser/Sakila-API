@@ -1,6 +1,7 @@
 package gov.iti.jets.persistence.dto;
 
 
+import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
@@ -17,7 +18,7 @@ public class PaymentDto implements Serializable {
     @XmlAttribute
     private  Integer id;
     @XmlElement
-    private  CustomerDto customer;
+    private CustomerDto customer;
     @XmlElement
     private  BigDecimal amount;
     @XmlElement
