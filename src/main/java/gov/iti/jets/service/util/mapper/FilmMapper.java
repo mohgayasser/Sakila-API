@@ -1,5 +1,6 @@
 package gov.iti.jets.service.util.mapper;
 
+import gov.iti.jets.persistence.dto.PaymentDto;
 import gov.iti.jets.persistence.dto.categories.getFilmCategoryIdDto;
 import gov.iti.jets.persistence.dto.films.getFilmDto;
 import gov.iti.jets.persistence.dto.films.getInventoryDto;
@@ -12,7 +13,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.Set;
 
-@Mapper(uses = {FilmActorMapper.class,AddressMapper.class})
+@Mapper(uses = {FilmActorMapper.class, AddressMapper.class})
 public interface FilmMapper {
     Film filmDtoToFilm(getFilmDto getFilmDto);
 
@@ -72,4 +73,12 @@ public interface FilmMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     FilmCategoryId updateFilmCategoryIdFromFilmCategoryIdDto(getFilmCategoryIdDto getFilmCategoryIdDto, @MappingTarget FilmCategoryId filmCategoryId);
+
+
+    Payment paymentDtoToPayment(PaymentDto paymentDto);
+
+    PaymentDto paymentToPaymentDto(Payment payment);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Payment updatePaymentFromPaymentDto(PaymentDto paymentDto, @MappingTarget Payment payment);
 }

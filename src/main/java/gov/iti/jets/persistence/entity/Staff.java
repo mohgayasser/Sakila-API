@@ -13,7 +13,7 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "staff_id", columnDefinition = "TINYINT UNSIGNED not null")
-    private Short id;
+    private Integer id;
 
     @Column(name = "first_name", nullable = false, length = 45)
     private String firstName;
@@ -54,7 +54,7 @@ public class Staff {
 
     @OneToMany(mappedBy = "staff")
     private Set<Rental> rentals = new LinkedHashSet<>();
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -74,7 +74,7 @@ public class Staff {
         this.rentals = rentals;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

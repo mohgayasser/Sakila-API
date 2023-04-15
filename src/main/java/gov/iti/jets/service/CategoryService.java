@@ -1,4 +1,4 @@
-package gov.iti.jets.service.category;
+package gov.iti.jets.service;
 
 import java.util.Set;
 
@@ -13,7 +13,7 @@ import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.validation.ConstraintViolation;
 
 
-public class addCategoryService {
+public class CategoryService {
     public getCategoryDto addCategory(getCategoryDto getCategoryDto) throws validationException {
 
         Category addedCategory = null;

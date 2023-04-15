@@ -3,11 +3,16 @@ package gov.iti.jets.presentation.dto;
 import jakarta.validation.constraints.*;
 
 import jakarta.xml.bind.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OperationalFilmDto implements Serializable {
@@ -70,155 +75,4 @@ public class OperationalFilmDto implements Serializable {
     @XmlElement
     private  String specialFeatures;
 
-    public OperationalFilmDto(String title, String description, Integer releaseYear, int languageId, int orignalLanguageId, Short rentalDuration,     Float rentalRate, Integer length,     Float replacementCost, String rating, Set<Integer> storeId, Date lastUpdate, Set<Integer> filmActorsIds, Set<Integer> filmCategoriesIds, String specialFeatures) {
-        this.title = title;
-        this.description = description;
-        this.releaseYear = releaseYear;
-        this.languageId = languageId;
-        this.orignalLanguageId = orignalLanguageId;
-        this.rentalDuration = rentalDuration;
-        this.rentalRate = rentalRate;
-        this.length = length;
-        this.replacementCost = replacementCost;
-        this.rating = rating;
-        this.storesIds = storeId;
-        this.filmActorsIds = filmActorsIds;
-        this.filmCategoriesIds = filmCategoriesIds;
-        this.specialFeatures = specialFeatures;
-    }
-
-    public OperationalFilmDto() {
-    }
-
-    @Override
-    public String toString() {
-        return "OperationalFilmDto{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", releaseYear=" + releaseYear +
-                ", languageId=" + languageId +
-                ", orignalLanguageId=" + orignalLanguageId +
-                ", rentalDuration=" + rentalDuration +
-                ", rentalRate=" + rentalRate +
-                ", length=" + length +
-                ", replacementCost=" + replacementCost +
-                ", rating='" + rating + '\'' +
-                ", storesIds=" + storesIds +
-                ", filmActorsIds=" + filmActorsIds +
-                ", filmCategoriesIds=" + filmCategoriesIds +
-                ", specialFeatures=" + specialFeatures +
-                '}';
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getReleaseYear() {
-        return releaseYear;
-    }
-
-    public void setReleaseYear(Integer releaseYear) {
-        this.releaseYear = releaseYear;
-    }
-
-    public int getLanguageId() {
-        return languageId;
-    }
-
-    public void setLanguageId(int languageId) {
-        this.languageId = languageId;
-    }
-
-    public int getOrignalLanguageId() {
-        return orignalLanguageId;
-    }
-
-    public void setOrignalLanguageId(int orignalLanguageId) {
-        this.orignalLanguageId = orignalLanguageId;
-    }
-
-    public Short getRentalDuration() {
-        return rentalDuration;
-    }
-
-    public void setRentalDuration(Short rentalDuration) {
-        this.rentalDuration = rentalDuration;
-    }
-
-    public     Float getRentalRate() {
-        return rentalRate;
-    }
-
-    public void setRentalRate(    Float rentalRate) {
-        this.rentalRate = rentalRate;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    public     Float getReplacementCost() {
-        return replacementCost;
-    }
-
-    public void setReplacementCost(    Float replacementCost) {
-        this.replacementCost = replacementCost;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-    public void setRating(String rating) {
-        this.rating = rating;
-    }
-
-    public Set<Integer> getStoresIds() {
-        return storesIds;
-    }
-
-    public void setStoresIds(Set<Integer> storesIds) {
-        this.storesIds = storesIds;
-    }
-
-    public Set<Integer> getFilmActorsIds() {
-        return filmActorsIds;
-    }
-
-    public void setFilmActorsIds(Set<Integer> filmActorsIds) {
-        this.filmActorsIds = filmActorsIds;
-    }
-
-    public Set<Integer> getFilmCategoriesIds() {
-        return filmCategoriesIds;
-    }
-
-    public void setFilmCategoriesIds(Set<Integer> filmCategoriesIds) {
-        this.filmCategoriesIds = filmCategoriesIds;
-    }
-
-    public String getSpecialFeatures() {
-        return specialFeatures;
-    }
-
-    public void setSpecialFeatures(String specialFeatures) {
-        this.specialFeatures = specialFeatures;
-    }
 }

@@ -1,18 +1,16 @@
 package gov.iti.jets.persistence.dao;
 
 import gov.iti.jets.persistence.dao.interfaces.filmDao;
-import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.persistence.entity.Film;
+import gov.iti.jets.persistence.entity.Inventory;
 import gov.iti.jets.persistence.views.FilmList;
-import gov.iti.jets.presentation.dto.OperationalFilmDto;
-import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.models.Page;
-import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.persistence.Query;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class filmImpl extends RepositoryImpl<Film,Integer> implements filmDao {
@@ -43,21 +41,47 @@ public class filmImpl extends RepositoryImpl<Film,Integer> implements filmDao {
 
     @Override
     public Optional<Boolean> isFilmInStock(int filmId) {
-        String sqlQuery = "SELECT inventory_in_stock(:id) FROM dual";
-        Query query = _entityManager.createNativeQuery(sqlQuery);
+        //String sqlQuery = "SELECT inventory_in_stock(:id) FROM dual";
+        String sqlQuery = " from Inventory I where I.film.id= :id  ";
+        Query query = _entityManager.createQuery(sqlQuery);
         query.setParameter("id",filmId);
-        Boolean result = (Boolean) query.getSingleResult();
-
+        query.setMaxResults(1);
+        Inventory result = (Inventory) query.getSingleResult();
+        Optional<Boolean> exists = null;
+        if(result!=null){
+            return  Optional.ofNullable(true);
+        }else {
+           return Optional.ofNullable(false);
+        }
+    }
+  ///wrong
+    @Override
+    public Optional<Integer> getFilmRenter(int inventory) {
+        String sqlQuery = "SELECT inventory_held_by_customer(:id) FROM dual";
+        Query query = _entityManager.createNativeQuery(sqlQuery);
+        query.setParameter("id",inventory);
+        Integer result = (Integer) query.getSingleResult();
         return  Optional.ofNullable(result);
     }
 
     @Override
-    public Optional<Integer> getFilmRenter(int filmId) {
-        String sqlQuery = "SELECT inventory_held_by_customer(:id) FROM dual";
-        Query query = _entityManager.createNativeQuery(sqlQuery);
-        query.setParameter("id",filmId);
-        Integer result = (Integer) query.getSingleResult();
-        return  Optional.ofNullable(result);
+    public Integer getFilmQuantity(int filmId, int storeId) {
+       InventoryImpl inventoryImp = new InventoryImpl();
+       List<Inventory> inventory = inventoryImp.getAllInventories(filmId,storeId);
+       AtomicInteger count = new AtomicInteger();
+
+       inventory.forEach(e->{
+           AtomicBoolean stillRent = new AtomicBoolean(false);
+           e.getRentals().forEach(rental -> {
+             if( rental.getReturnDate() == null){
+                 stillRent.set(true);
+             }
+           });
+           if(!stillRent.get()){
+               count.getAndIncrement();
+           }
+       });
+        return count.get();
     }
 
 

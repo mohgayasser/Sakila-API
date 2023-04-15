@@ -23,7 +23,7 @@ public class insertFilmService  implements filmService {
     RepositoryImpl<FilmCategory, Integer> FilmCategoryRepo = new RepositoryImpl<>(FilmCategory.class);
 
     public boolean insertFilm(gov.iti.jets.presentation.dto.OperationalFilmDto filmDto) throws validationException {
-        System.out.println(filmDto);
+
         OperationalFilmDto operationalFilmDto =OperationalFilmMapper.INSTANCE.presentationToService(filmDto);
         Film newFilm = OperationalToFilmMapper.INSTANCE.OperationalToFilm(operationalFilmDto);
         Optional<Language> FilmLanguage = languageRepo.findById(operationalFilmDto.getLanguageId());
