@@ -1,9 +1,7 @@
-package gov.iti.jets.persistence.dto;
+package gov.iti.jets.persistence.dto.customer;
 
-
-import gov.iti.jets.persistence.dto.customer.CustomerDto;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,19 +15,15 @@ import java.util.Date;
  * A DTO for the {@link gov.iti.jets.persistence.entity.Payment} entity
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @XmlRootElement
-public class PaymentDto implements Serializable {
-    @XmlAttribute
+@XmlAccessorType(XmlAccessType.FIELD)
+public class CustomerPaymentDto implements Serializable {
     private  Integer id;
-    @XmlElement
-    private CustomerDto customer;
-    @XmlElement
+    private  RentalStaffDto staff;
+    private  PaymentRentalDto rental;
     private  BigDecimal amount;
-    @XmlElement
     private  Date paymentDate;
-    @XmlElement
     private  Date lastUpdate;
-
 }

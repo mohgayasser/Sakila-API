@@ -53,6 +53,10 @@ public class filmService implements gov.iti.jets.service.interfaces.filmService 
         });
         return getFilmListDtos;
     }
+    public Integer getFilmQuantity(int filmId, int storeId){
+        Integer Quantity = film.getFilmQuantity(filmId,storeId);
+        return  Quantity;
+    }
     public Set<CustomerDto> FilmRenter(int filmId) throws validationException {
         Optional<Film> searchingFilm = repo.findById(filmId);
         if(searchingFilm.isPresent()) {

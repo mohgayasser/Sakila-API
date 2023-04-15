@@ -11,7 +11,7 @@ public interface ReadOnlyRepository<E,K> extends Repository<E,K>{
     List<E> findAll(Page page);
 
     Optional<E> findById(int id) throws validationException;
-    Optional<E> findFromContext(K id);
+
 
     long count();
     long pages(Page page);

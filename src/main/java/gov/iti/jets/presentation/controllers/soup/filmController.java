@@ -132,4 +132,16 @@ public class filmController {
 
         return result;
     }
+    @WebMethod
+    public Integer getFilmQuantityInStock(@WebParam(name = "filmId")Integer filmId,@WebParam(name = "storeId") Integer storeId) throws validationException {
+        if(filmId<0){
+            throw new validationException("You need to enter valid filmId which for ex starting from 1");
+        }
+        if(storeId<0){
+            throw new validationException("You need to enter valid storeId which for ex starting from 1");
+        }
+        filmService film =new filmService();
+        Integer Quantity = film.getFilmQuantity(filmId,storeId);
+        return  Quantity;
+    }
 }

@@ -43,13 +43,6 @@ public class RepositoryImpl<E, K> implements ReadOnlyRepository<E, K> {
     }
 
 
-
-    @Override
-    public Optional<E> findFromContext(K id) {
-        E ew = _entityManager.getReference(type, id);
-        return Optional.ofNullable(ew);
-    }
-
     @Override
     public long count() {
         long count= (long) _entityManager.createQuery("SELECT COUNT(t) FROM " + type.getName() + "t ")
