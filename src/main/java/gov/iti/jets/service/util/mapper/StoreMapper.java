@@ -11,13 +11,13 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
-public interface StorMapper {
+public interface StoreMapper {
 
     Store storeDtoToStore(StoreDto storeDto);
 
     StoreDto storeToStoreDto(Store store);
 
-    StorMapper INSTANCE = Mappers.getMapper(StorMapper.class);
+    StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
 
 
     Payment paymentDtoToPayment(PaymentDto paymentDto);

@@ -1,4 +1,4 @@
-package gov.iti.jets.service.util.converters;
+package gov.iti.jets.persistence.converters;
 
 import gov.iti.jets.persistence.entity.enums.FilmRating;
 import jakarta.persistence.AttributeConverter;

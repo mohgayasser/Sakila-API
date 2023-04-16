@@ -1,4 +1,4 @@
-package gov.iti.jets.service.util.models;
+package gov.iti.jets.presentation.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

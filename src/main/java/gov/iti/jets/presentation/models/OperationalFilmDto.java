@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.dto;
+package gov.iti.jets.presentation.models;
 
 import jakarta.validation.constraints.*;
 
@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 @Data
 @AllArgsConstructor

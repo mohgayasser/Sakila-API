@@ -3,17 +3,16 @@ package gov.iti.jets.presentation.controllers.soup;
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.customer.CustomerPaymentDto;
 import gov.iti.jets.persistence.dto.customer.CustomerRentalDto;
-import gov.iti.jets.presentation.dto.AddCustomerDto;
-import gov.iti.jets.presentation.dto.OperationalFilmDto;
+import gov.iti.jets.presentation.models.AddCustomerDto;
+import gov.iti.jets.presentation.models.Date;
 import gov.iti.jets.service.CustomerService;
+import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -33,7 +32,7 @@ public class customerController {
         }
     }
     @WebMethod
-    public BigDecimal getcustomerBalanceInDate(@WebParam(name = "customerId") int id , @WebParam (name = "date") gov.iti.jets.service.util.models.Date date) throws  validationException {
+    public BigDecimal getcustomerBalanceInDate(@WebParam(name = "customerId") int id , @WebParam (name = "date") Date date) throws  validationException {
         if (id < 0) {
             throw new validationException("you need to enter a valid id");
         } else {
@@ -65,12 +64,10 @@ public class customerController {
         return  rentalDtos;
     }
     @WebMethod
-    public  boolean newCustomer(@NotBlank@NotNull@WebParam(name = "customer")AddCustomerDto customerDto)throws validationException{
-        validatorHandler handler = new validatorHandler();
-        Set<ConstraintViolation<AddCustomerDto>> violations = handler.getValidation().validate(customerDto);
-        if(violations.size() >0){
-            String msgs=handler.getErrorMessage(violations);
-            throw new validationException(msgs);
+    public  boolean newCustomer(@WebParam(name = "customer")AddCustomerDto customerDto)throws validationException{
+        String valid = ValidFieldsValidator.validate(customerDto);
+        if(valid.length()>0){
+            throw new validationException(valid);
         }
         CustomerService customerService = new CustomerService();
         boolean result =customerService.AddCustomer(customerDto);

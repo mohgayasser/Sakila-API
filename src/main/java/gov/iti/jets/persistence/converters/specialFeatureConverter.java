@@ -1,4 +1,4 @@
-package gov.iti.jets.service.util.converters;
+package gov.iti.jets.persistence.converters;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,9 +1,11 @@
 package gov.iti.jets.service.film;
 
+import gov.iti.jets.persistence.dao.EntityManagerLoaner;
 import gov.iti.jets.persistence.dao.InventoryImpl;
-import gov.iti.jets.persistence.dao.RepositoryImpl;
+import gov.iti.jets.persistence.dao.TransactionImpl;
+import gov.iti.jets.persistence.dao.filmImpl;
 import gov.iti.jets.persistence.entity.*;
-import gov.iti.jets.presentation.dto.RentFilmDto;
+import gov.iti.jets.presentation.models.RentFilmDto;
 import gov.iti.jets.service.CustomerService;
 import gov.iti.jets.service.paymentService;
 import gov.iti.jets.service.RentalService;
@@ -16,16 +18,17 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class RentFilmService implements gov.iti.jets.service.interfaces.filmService {
-    RepositoryImpl<Customer, Integer> customerRepository = new RepositoryImpl<>(Customer.class);
-    RepositoryImpl<Staff, Integer> staffRepository = new RepositoryImpl<>(Staff.class);
+public class RentFilmService  {
+    filmImpl film = new filmImpl();
+    EntityManagerLoaner entityManagerLoaner =new EntityManagerLoaner();
 
     public int rentFilm(RentFilmDto rentFilmDto) throws validationException {
+
         //check customer id
-        Optional<Customer> customer =customerRepository.findById(rentFilmDto.getCustomerId());
+        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Customer.class),rentFilmDto.getCustomerId(),"find"));
          if(customer.isPresent()) {
             //check staff
-             Optional<Staff> staff = staffRepository.findById(rentFilmDto.getStaffId());
+             Optional<Staff> staff = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Staff.class),rentFilmDto.getStaffId(),"find"));
              if (staff.isPresent()) {
                  //if this staff is try to rent film in his store or another one
                  if(staff.get().getStore().getId() == rentFilmDto.getStoreId()) {
@@ -59,12 +62,16 @@ public class RentFilmService implements gov.iti.jets.service.interfaces.filmServ
                                          }
                                      });
                                      if ((!stillRent.get()) && counter.get() > 0) {
-                                         rental.set(new Rental(new Date(), e, customer.get(), staff.get(), new Date()));
-                                         Rental newRental = crudRentalService.insertRental(rental.get());
-                                         // cost of rent 1 copy of selected film
-                                         Payment paymentDto = paymentService.newPayment(new Payment(customer.get(),staff.get(),newRental,customerBalance,new Date(),new Date()));
+                                         try{
+                                             rental.set(new Rental(new Date(), e, customer.get(), staff.get(), new Date()));
+                                             Rental newRental = crudRentalService.insertRental(rental.get());
+                                             // cost of rent 1 copy of selected film
+                                             Payment paymentDto = paymentService.newPayment(new Payment(customer.get(), staff.get(), newRental, customerBalance, new Date(), new Date()));
 
-                                         counter.getAndSet(counter.get() - 1);
+                                             counter.getAndSet(counter.get() - 1);
+                                         }catch (validationException validationException){
+                                             throw new RuntimeException(validationException.getMessage());
+                                         }
                                      }
                                  });
                              }else {

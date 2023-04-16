@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.dto;
+package gov.iti.jets.presentation.models;
 
 import gov.iti.jets.service.util.customAnnotations.EmptyAnnotation;
 import jakarta.xml.bind.annotation.XmlRootElement;

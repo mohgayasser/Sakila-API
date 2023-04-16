@@ -2,9 +2,7 @@ package gov.iti.jets.service;
 
 import java.util.Set;
 
-
-
-import gov.iti.jets.persistence.dao.RepositoryImpl;
+import gov.iti.jets.persistence.dao.categoryImpl;
 import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.persistence.entity.Category;
 import gov.iti.jets.service.util.exceptions.validationException;
@@ -17,9 +15,7 @@ public class CategoryService {
     public getCategoryDto addCategory(getCategoryDto getCategoryDto) throws validationException {
 
         Category addedCategory = null;
-
-        RepositoryImpl<Category,Integer> repositoryImpl =new RepositoryImpl<>(Category.class);
-
+        categoryImpl categoryImpl =new categoryImpl();
         Category category = CategoryMapper.INSTANCE.categoryDtoToCategory(getCategoryDto);
 
         validatorHandler handler = new validatorHandler();
@@ -33,7 +29,7 @@ public class CategoryService {
 
 
         try{
-            addedCategory =  repositoryImpl.create(category);
+            addedCategory = categoryImpl.createCategory(category);
 
             getCategoryDto.setId(addedCategory.getId());
 

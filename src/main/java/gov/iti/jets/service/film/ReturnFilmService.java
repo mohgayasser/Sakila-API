@@ -1,14 +1,12 @@
 package gov.iti.jets.service.film;
 
+import gov.iti.jets.persistence.dao.EntityManagerLoaner;
 import gov.iti.jets.persistence.dao.InventoryImpl;
-import gov.iti.jets.persistence.dao.RepositoryImpl;
-import gov.iti.jets.persistence.entity.Customer;
-import gov.iti.jets.persistence.entity.Film;
-import gov.iti.jets.persistence.entity.Inventory;
-import gov.iti.jets.persistence.entity.Rental;
-import gov.iti.jets.presentation.dto.ReturnFilmDto;
+import gov.iti.jets.persistence.dao.TransactionImpl;
+import gov.iti.jets.persistence.dao.filmImpl;
+import gov.iti.jets.persistence.entity.*;
+import gov.iti.jets.presentation.models.ReturnFilmDto;
 import gov.iti.jets.service.RentalService;
-import gov.iti.jets.service.interfaces.filmService;
 import gov.iti.jets.service.paymentService;
 import gov.iti.jets.service.util.exceptions.validationException;
 
@@ -18,17 +16,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ReturnFilmService  implements filmService {
-    RepositoryImpl<Customer, Integer> customerRepository = new RepositoryImpl<>(Customer.class);
+public class ReturnFilmService   {
+    filmImpl film = new filmImpl();
+    EntityManagerLoaner entityManagerLoaner =new EntityManagerLoaner();
 
     public boolean returnFilm(ReturnFilmDto returnFilmDto) throws validationException {
         RentalService rentalService = new RentalService();
         InventoryImpl inventory =new InventoryImpl();
         paymentService paymentService = new paymentService();
-        Optional<Film> selectedFilm =film.findById(returnFilmDto.getFilmId());
+        Optional<Film> selectedFilm = Optional.ofNullable(film.getFilmById(returnFilmDto.getFilmId()));
         if(selectedFilm.isPresent()) {
             //check customer id
-            Optional<Customer> customer = customerRepository.findById(returnFilmDto.getCustomerId());
+            Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Customer.class),returnFilmDto.getCustomerId(),"find"));
             if (customer.isPresent()) {
                 List<Inventory> inventories = inventory.getAllInventories(returnFilmDto.getFilmId(), returnFilmDto.getStoreId());
                 AtomicReference<Integer> counter = new AtomicReference<>(returnFilmDto.getNumberOfCopies());
@@ -40,9 +39,17 @@ public class ReturnFilmService  implements filmService {
                                 rental.getPayments().forEach(payment -> {
                                     System.out.println("update payment");
                                     payment.setAmount(BigDecimal.valueOf(selectedFilm.get().getRentalRate()));
-                                    paymentService.updatePayment(payment);
+                                    try {
+                                        paymentService.updatePayment(payment);
+                                    } catch (validationException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                 });
-                                Rental updatedRental = rentalService.updateRental(rental);
+                                try {
+                                    Rental updatedRental = entityManagerLoaner.executeCRUD(new TransactionImpl<>(Rental.class),rental,"update");
+                                } catch (validationException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 counter.getAndSet(counter.get() - 1);
                             }
                         }

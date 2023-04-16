@@ -1,5 +1,8 @@
 package gov.iti.jets.service.film;
+import gov.iti.jets.persistence.dao.EntityManagerLoaner;
 import gov.iti.jets.persistence.dao.InventoryImpl;
+import gov.iti.jets.persistence.dao.TransactionImpl;
+import gov.iti.jets.persistence.dao.filmImpl;
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.films.getFilmListDto;
 import  gov.iti.jets.persistence.entity.Film;
@@ -10,17 +13,16 @@ import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.mapper.CustomerMapper;
 import gov.iti.jets.service.util.mapper.FilmListMapper;
 import gov.iti.jets.service.util.mapper.FilmMapper;
-import gov.iti.jets.service.util.models.Page;
+import gov.iti.jets.presentation.models.Page;
 
 import java.util.*;
 
-public class filmService implements gov.iti.jets.service.interfaces.filmService {
-
-    public List<getFilmDto> getFilmByName(String FilmTitle, Page page) {
-
+public class filmService {
+    filmImpl film = new filmImpl();
+    EntityManagerLoaner entityManagerLoaner= new EntityManagerLoaner();
+    public List<getFilmDto> getFilmByName(String FilmTitle, Page page) throws validationException {
 
         List<Film> filmList = film.getFilmByName(FilmTitle, page);
-
         List<getFilmDto> getFilmDtoList = new ArrayList<>();
         filmList.forEach(film1 -> {
             getFilmDtoList.add(FilmMapper.INSTANCE.filmToFilmDto(film1));
@@ -32,10 +34,10 @@ public class filmService implements gov.iti.jets.service.interfaces.filmService 
 
         getFilmDto filmDto =null;
        try {
-           Optional<Film> film = repo.findById(filmId);
+           Optional<Film> returnedFilm = Optional.ofNullable(film.getFilmById(filmId));
 
-           if(film.isPresent()){
-                filmDto = FilmMapper.INSTANCE.filmToFilmDto(film.get());
+           if(returnedFilm.isPresent()){
+                filmDto = FilmMapper.INSTANCE.filmToFilmDto(returnedFilm.get());
            }else {
                throw new validationException("this film id isn't existing in out system");
            }
@@ -45,7 +47,7 @@ public class filmService implements gov.iti.jets.service.interfaces.filmService 
         }
 
     }
-    public List<getFilmListDto> getFilmsFromFilmListView(Page page){
+    public List<getFilmListDto> getFilmsFromFilmListView(Page page) throws validationException {
         List<FilmList>filmLists = film.getFilmLists(page);
         List<getFilmListDto> getFilmListDtos = new ArrayList<>();
         filmLists.forEach(film1->{
@@ -53,12 +55,12 @@ public class filmService implements gov.iti.jets.service.interfaces.filmService 
         });
         return getFilmListDtos;
     }
-    public Integer getFilmQuantity(int filmId, int storeId){
+    public Integer getFilmQuantity(int filmId, int storeId) throws validationException {
         Integer Quantity = film.getFilmQuantity(filmId,storeId);
         return  Quantity;
     }
     public Set<CustomerDto> FilmRenter(int filmId) throws validationException {
-        Optional<Film> searchingFilm = repo.findById(filmId);
+        Optional<Film> searchingFilm = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Film.class),filmId,"find"));
         if(searchingFilm.isPresent()) {
 
             InventoryImpl inventory = new InventoryImpl();
@@ -85,7 +87,7 @@ public class filmService implements gov.iti.jets.service.interfaces.filmService 
         validationException validationException =new validationException(message);
         Boolean Quantity =null;
         try {
-            Optional<Film> searchingFilm = repo.findById(FilmId);
+            Optional<Film> searchingFilm = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Film.class),FilmId,"find"));
             if(searchingFilm.isPresent()) {
                 Optional<Boolean> filmQuantity = film.isFilmInStock(FilmId);
 

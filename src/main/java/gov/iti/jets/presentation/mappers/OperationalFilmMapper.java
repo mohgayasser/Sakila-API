@@ -1,6 +1,6 @@
 package gov.iti.jets.presentation.mappers;
 
-import gov.iti.jets.presentation.dto.OperationalFilmDto;
+import gov.iti.jets.presentation.models.OperationalFilmDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 @Mapper

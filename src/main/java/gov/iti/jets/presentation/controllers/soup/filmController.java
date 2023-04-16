@@ -2,14 +2,14 @@ package gov.iti.jets.presentation.controllers.soup;
 
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.films.getFilmListDto;
-import gov.iti.jets.presentation.dto.OperationalFilmDto;
+import gov.iti.jets.presentation.models.OperationalFilmDto;
 import gov.iti.jets.persistence.dto.films.getFilmDto;
-import gov.iti.jets.presentation.dto.RentFilmDto;
-import gov.iti.jets.presentation.dto.ReturnFilmDto;
+import gov.iti.jets.presentation.models.RentFilmDto;
+import gov.iti.jets.presentation.models.ReturnFilmDto;
 import gov.iti.jets.service.film.*;
 import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
-import gov.iti.jets.service.util.models.Page;
+import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;

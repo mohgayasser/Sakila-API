@@ -1,34 +1,36 @@
 package gov.iti.jets.service;
 
-import gov.iti.jets.persistence.dao.RepositoryImpl;
+import gov.iti.jets.persistence.dao.EntityManagerLoaner;
+import gov.iti.jets.persistence.dao.TransactionImpl;
 import gov.iti.jets.persistence.dao.rentalImpl;
-import gov.iti.jets.persistence.dto.RentalDto;
 import gov.iti.jets.persistence.dto.customer.CustomerRentalDto;
+import gov.iti.jets.persistence.entity.Category;
 import gov.iti.jets.persistence.entity.Rental;
+import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.mapper.RentalMapper;
-import gov.iti.jets.service.util.models.Page;
+import gov.iti.jets.presentation.models.Page;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RentalService  {
     rentalImpl RENTAL = new rentalImpl();
-    RepositoryImpl<Rental, Integer> repo = new RepositoryImpl<>(Rental.class);
-    public Rental  insertRental(Rental rental){
-        repo.create(rental);
-        return rental;
+    EntityManagerLoaner entityManagerLoaner=new EntityManagerLoaner();
+    public Rental  insertRental(Rental rental) throws validationException {
+        Rental newRental =entityManagerLoaner.executeCRUD(new TransactionImpl<>(Rental.class),rental,"create");
+        return newRental;
     }
-    public List<Rental> getRental(Integer customerId, Integer inventoryId,Integer filmId){
+    public List<Rental> getRental(Integer customerId, Integer inventoryId,Integer filmId) throws validationException {
         rentalImpl rental = new rentalImpl();
         List<Rental> rentalList =rental.getRentByCustomer(customerId,inventoryId);
         return rentalList;
 
     }
-    public Rental updateRental(Rental rental){
-        Rental updatedRental = repo.update(rental);
+    public Rental updateRental(Rental rental) throws validationException {
+        Rental updatedRental = entityManagerLoaner.executeCRUD(new TransactionImpl<>(Rental.class),rental,"update");
         return  updatedRental;
     }
-    public List<CustomerRentalDto> getRentalByCustomerId(Integer customerId, Page page){
+    public List<CustomerRentalDto> getRentalByCustomerId(Integer customerId, Page page) throws validationException {
         rentalImpl rental = new rentalImpl();
         List<Rental> rentalList =rental.getRentalByCustomerId(customerId,page);
         List<CustomerRentalDto> rentalDtos = new ArrayList<>();

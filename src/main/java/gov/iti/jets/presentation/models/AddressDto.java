@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.dto;
+package gov.iti.jets.presentation.models;
 
 import gov.iti.jets.service.util.customAnnotations.EmptyAnnotation;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -6,11 +6,9 @@ import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * A DTO for the {@link gov.iti.jets.persistence.entity.Address} entity
@@ -29,4 +27,5 @@ public class AddressDto implements Serializable {
     private String country;
     private String postalCode;
     private String phone;
+    private Location location;
 }
