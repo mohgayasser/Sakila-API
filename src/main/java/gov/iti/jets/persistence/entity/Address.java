@@ -161,9 +161,6 @@ public class Address {
                 ", postalCode='" + postalCode + '\'' +
                 ", phone='" + phone + '\'' +
                 ", lastUpdate=" + lastUpdate +
-                ", staff=" + staff +
-                ", stores=" + stores +
-                ", customers=" + customers +
                 ", location=" + location +
                 '}';
     }

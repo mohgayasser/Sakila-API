@@ -4,6 +4,7 @@ import gov.iti.jets.persistence.dao.interfaces.inventoryDao;
 import gov.iti.jets.persistence.entity.Country;
 import gov.iti.jets.persistence.entity.Inventory;
 import gov.iti.jets.service.util.exceptions.validationException;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 
 import java.util.LinkedHashMap;
@@ -17,22 +18,22 @@ public class InventoryImpl implements inventoryDao  {
         entityManagerLoaner =new EntityManagerLoaner();
     }
     @Override
-    public List<Inventory> getAllInventories(Integer filmId, Integer storeId) throws validationException {
+    public List<Inventory> getAllInventories(EntityManager entityManager,Integer filmId, Integer storeId) throws validationException {
         String query="From Inventory I where I.film.Id = :filmId and I.store.Id = :storeId";
         Map<String,Object> map =new LinkedHashMap<>();
         map.put("filmId",filmId);
         map.put("storeId",storeId);
-        List<Inventory> inventories = entityManagerLoaner.executeList(new TransactionImpl<>(Inventory.class),query,map,null);
+        List<Inventory> inventories = entityManagerLoaner.executeList(entityManager,new TransactionImpl<>(Inventory.class),query,map,null);
 
         return  inventories;
     }
 
     @Override
-    public List<Inventory> getInventoryIdByFilmId(Integer filmId) throws validationException {
+    public List<Inventory> getInventoryIdByFilmId(EntityManager entityManager,Integer filmId) throws validationException {
         String sqlQuery = " from Inventory I where I.film.id= :id ";
         Map<String,Object> map =new LinkedHashMap<>();
         map.put("id",filmId);
-        List<Inventory> result =entityManagerLoaner.executeList(new TransactionImpl<>(Inventory.class),sqlQuery,map,null);
+        List<Inventory> result =entityManagerLoaner.executeList(entityManager,new TransactionImpl<>(Inventory.class),sqlQuery,map,null);
         return result;
     }
 

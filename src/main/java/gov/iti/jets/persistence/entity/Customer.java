@@ -169,7 +169,6 @@ public class Customer {
                 ", createDate=" + createDate +
                 ", lastUpdate=" + lastUpdate +
                 ", payments=" + payments +
-                ", rentals=" + rentals +
                 '}';
     }
 }

@@ -77,8 +77,6 @@ public class FilmCategory {
     public String toString() {
         return "FilmCategory{" +
                 "id=" + id +
-                ", film=" + film +
-                ", category=" + category +
                 ", lastUpdate=" + lastUpdate +
                 '}';
     }

@@ -216,9 +216,6 @@ public class Film {
                 ", rating=" + rating +
                 ", specialFeatures=" + specialFeatures +
                 ", lastUpdate=" + lastUpdate +
-                ", inventories=" + inventories +
-                ", filmActors=" + filmActors +
-                ", filmCategories=" + filmCategories +
                 '}';
     }
 }

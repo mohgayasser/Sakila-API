@@ -12,74 +12,61 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityManagerLoaner {
-    private EntityManagerFactory entityManagerFactory = null;
-    public EntityManagerLoaner(){
-        entityManagerFactory = Persistence.createEntityManagerFactory("sakila");
-    }
 
-    public <T,R> T executeCRUD(Transaction<T> operations,R value,String Operation) throws validationException {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+
+    public <T,R> T executeCRUD(EntityManager entityManager,Transaction<T> operations,R value,String Operation) throws validationException {
+
         T result;
         try{
             result = switch (Operation) {
-                case "find" -> (T) operations.findById((Integer) value);
-                case "create" -> (T) operations.create((T)value);
-                case "remove" -> (T) operations.remove((T) value);
-                case "update" -> (T) operations.update((T) value);
+                case "find" -> (T) operations.findById((Integer) value,entityManager);
+                case "create" -> (T) operations.create((T)value,entityManager);
+                case "remove" -> (T) operations.remove((T) value,entityManager);
+                case "update" -> (T) operations.update((T) value,entityManager);
                 default -> null;
             };
 
-            transaction.commit();
+            //transaction.commit();
 
         }catch (RuntimeException e){
-            transaction.rollback();
+            entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
-        }finally {
-            entityManager.close();
         }
         return result;
     }
-    public <T> T execute(Transaction<T> operations, String Query , Map<String,Object> map) throws validationException {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
+    public <T> T execute(EntityManager entityManager,Transaction<T> operations, String Query , Map<String,Object> map) throws validationException {
+
+
         String search  = "DUAL";
-        transaction.begin();
+
         T result;
         try{
 
             if ( Query.toLowerCase().indexOf(search.toLowerCase()) != -1 ) {
 
-              result  = (T)operations.functions(Query, map);
+              result  = (T)operations.functions(entityManager,Query, map);
             } else {
-                result = (T)operations.singleResult(Query, map);
+                result = (T)operations.singleResult(entityManager,Query, map);
             }
 
-            transaction.commit();
+            //transaction.commit();
 
         }catch (RuntimeException e){
-            transaction.rollback();
+            entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
-        }finally {
-            entityManager.close();
         }
         return result;
     }
-    public <T> List<T> executeList(Transaction<T> operations, String Query , Map<String,Object> map, Page page) throws validationException {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+    public <T> List<T> executeList(EntityManager entityManager,Transaction<T> operations, String Query , Map<String,Object> map, Page page) throws validationException {
+
         List<T> result;
         try{
-             result = (List<T>)operations.listResult(Query, map,page);
-            transaction.commit();
+             result = (List<T>)operations.listResult(entityManager,Query, map,page);
+          //  transaction.commit();
 
         }catch (RuntimeException e){
-            transaction.rollback();
+            entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
-        }finally {
-            entityManager.close();
         }
         return result;
     }

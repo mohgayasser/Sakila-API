@@ -1,14 +1,14 @@
 package gov.iti.jets.persistence.dao.interfaces;
 
 import gov.iti.jets.service.util.exceptions.validationException;
+import jakarta.persistence.EntityManager;
 
-public interface Repository<E, K>{
-    E create (E e);
+public interface Repository<T, K>{
+    T findById(K id, EntityManager entityManager) throws validationException;
 
-    E update(E e);
+    T create(T t, EntityManager entityManager);
 
-    Boolean remove(E e);
+    T update(T t, EntityManager entityManager);
 
-
-    E findById(int id) throws validationException;
+    Boolean remove(T t, EntityManager entityManager);
 }

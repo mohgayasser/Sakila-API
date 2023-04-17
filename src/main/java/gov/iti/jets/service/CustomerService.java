@@ -1,6 +1,7 @@
 package gov.iti.jets.service;
 
 import gov.iti.jets.persistence.dao.*;
+import gov.iti.jets.persistence.dao.interfaces.EntityManagerOperations;
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.customer.CustomerPaymentDto;
 import gov.iti.jets.persistence.dto.customer.CustomerRentalDto;
@@ -11,30 +12,52 @@ import gov.iti.jets.service.util.mapper.CustomerMapper;
 import gov.iti.jets.service.util.mapper.CustomerPaymentMapper;
 import gov.iti.jets.service.util.mapper.RentalMapper;
 import gov.iti.jets.service.util.mapper.newCustomerMapper;
+import jakarta.persistence.EntityManager;
 
 import java.math.BigDecimal;
 import java.util.*;
 
 public class CustomerService {
-    EntityManagerLoaner entityManagerLoaner =new EntityManagerLoaner();
+    private final EntityManagerOperations entityManagerOperations;
 
+    EntityManagerLoaner entityManagerLoaner =new EntityManagerLoaner();
+public CustomerService(){
+    entityManagerOperations =new EntityManagerOperationsProxy();
+}
     public CustomerDto getCustomerById(int customerId) throws validationException {
-        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Customer.class),customerId,"find"));
+        EntityManager entityManager = entityManagerOperations.getEntityManager();
+
+        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customerId,"find"));
         CustomerDto customerDto = null;
         if(customer.isPresent()) {
              customerDto = CustomerMapper.INSTANCE.customerToCustomerDto(customer.get());
         }else {
             throw new validationException("this Customer doesn't exist in our system");
         }
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
         return customerDto;
     }
     public BigDecimal getCustomerBalanceinSpecificDate(Integer customerId, Date date) throws validationException {
+        EntityManager entityManager = entityManagerOperations.getEntityManager();
+
         customerImpl customer = new customerImpl();
-        BigDecimal amount = customer.getcustomerBalanceInspecificDate(customerId,date);
+        BigDecimal amount = customer.getcustomerBalanceInspecificDate(entityManager,customerId,date);
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
+        return amount;
+    }
+    public BigDecimal getCustomerBalanceinSpecificDateManaged(EntityManager entityManager, Integer customerId, Date date) throws validationException {
+
+        customerImpl customer = new customerImpl();
+        BigDecimal amount = customer.getcustomerBalanceInspecificDate(entityManager,customerId,date);
+
         return amount;
     }
     public Set<CustomerRentalDto> getCustomerRentalHistory(Integer customerId) throws validationException {
-        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Customer.class),customerId,"find"));
+        EntityManager entityManager = entityManagerOperations.getEntityManager();
+
+        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customerId,"find"));
         Set<Rental> rentalList =null;
         Set<CustomerRentalDto> rentalDtoList = new HashSet<>() ;
         if(customer.isPresent()){
@@ -46,10 +69,14 @@ public class CustomerService {
         }else {
             throw new validationException("this Customer doesn't exist in our system");
         }
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
         return rentalDtoList;
     }
     public Set<CustomerPaymentDto> getCustomerPaymentHistory(Integer customerId) throws validationException {
-        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(new TransactionImpl<>(Customer.class),customerId,"find"));
+        EntityManager entityManager = entityManagerOperations.getEntityManager();
+
+        Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customerId,"find"));
         Set<Payment> rentalList =null;
         Set<CustomerPaymentDto> rentalDtoList = new HashSet<>() ;
         if(customer.isPresent()){
@@ -61,13 +88,16 @@ public class CustomerService {
         }else {
             throw new validationException("this Customer doesn't exist in our system");
         }
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
         return rentalDtoList;
     }
     //add customer service
     public boolean AddCustomer(AddCustomerDto customerDto) throws validationException {
+        EntityManager entityManager = entityManagerOperations.getEntityManager();
 
         Customer customer = newCustomerMapper.INSTANCE.addCustomerDtoToCustomer(customerDto);
-        System.out.println("customer ->"+customer);
+
         StoreService storeService =new StoreService();
         Store store = null;
         try {
@@ -82,7 +112,7 @@ public class CustomerService {
 
         Optional<City>  city = null;
         try {
-            city = cityImpl.getCityByName(customerDto.getAddress().getCity());
+            city = cityImpl.getCityByName(entityManager,customerDto.getAddress().getCity());
             if(city.isPresent()){
                 customer.getAddress().setCity(city.get());
             }
@@ -93,7 +123,7 @@ public class CustomerService {
         CountryImpl countryImpl =new CountryImpl();
         Optional<Country>  country = null;
         try {
-            country = countryImpl.getCountryByName(customerDto.getAddress().getCountry());
+            country = countryImpl.getCountryByName(entityManager,customerDto.getAddress().getCountry());
             if(country.isPresent())
                 customer.getAddress().getCity().setCountry(country.get());
         } catch (validationException e) {
@@ -102,8 +132,9 @@ public class CustomerService {
 
         System.out.println("customer ->"+customer);
         customer.setActive(true);
-        Customer addedCustomer=entityManagerLoaner.executeCRUD(new TransactionImpl<>(Customer.class),customer,"update");
-
+        Customer addedCustomer=entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customer,"update");
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
         return true;
     }
 }

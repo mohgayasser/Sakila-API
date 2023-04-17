@@ -135,7 +135,6 @@ public class Rental {
         return "Rental{" +
                 "id=" + id +
                 ", rentalDate=" + rentalDate +
-                ", inventory=" + inventory +
                 ", customer=" + customer +
                 ", returnDate=" + returnDate +
                 ", staff=" + staff +

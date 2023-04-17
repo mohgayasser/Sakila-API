@@ -3,6 +3,7 @@ package gov.iti.jets.persistence.dao;
 import gov.iti.jets.persistence.dao.interfaces.CountryDao;
 import gov.iti.jets.persistence.entity.Country;
 import gov.iti.jets.service.util.exceptions.validationException;
+import jakarta.persistence.EntityManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,11 +15,11 @@ public class CountryImpl implements CountryDao {
         entityManagerLoaner =new EntityManagerLoaner();
     }
     @Override
-    public Optional<Country> getCountryByName(String countryName) throws validationException {
+    public Optional<Country> getCountryByName(EntityManager entityManager,String countryName) throws validationException {
         String SQLStr ="From Country c where c.country = :name";
         Map<String,Object> map =new LinkedHashMap<>();
         map.put("name",countryName);
-        Country country =  entityManagerLoaner.execute(new TransactionImpl<>(Country.class),SQLStr,map);
+        Country country =  entityManagerLoaner.execute(entityManager,new TransactionImpl<>(Country.class),SQLStr,map);
         return Optional.ofNullable(country);
     }
 }
