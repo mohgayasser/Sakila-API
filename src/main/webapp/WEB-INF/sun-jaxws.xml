@@ -16,5 +16,9 @@
     <endpoint
             name="customerController"
             implementation="gov.iti.jets.presentation.controllers.soup.customerController"
-            url-pattern="/ws/customer" />
+            url-pattern="/ws/customers" />
+    <endpoint
+            name="staffController"
+            implementation="gov.iti.jets.presentation.controllers.soup.StaffController"
+            url-pattern="/ws/staffs" />
 </endpoints>

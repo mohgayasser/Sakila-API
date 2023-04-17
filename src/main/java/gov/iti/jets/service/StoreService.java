@@ -16,13 +16,10 @@ public class StoreService {
     public  StoreService(){
         entityManagerOperations= new EntityManagerOperationsProxy();
     }
-    public Store getStoreById(Integer StoreId) throws validationException {
-        EntityManager entityManager = entityManagerOperations.getEntityManager();
+    public Store getStoreById(EntityManager entityManager,Integer StoreId) throws validationException {
 
         Optional<Store> store = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Store.class), StoreId, "find"));
         if (store.isPresent()){
-            entityManager.flush();
-        entityManagerOperations.closeEntityManager();
         return store.get();
         }
         else {

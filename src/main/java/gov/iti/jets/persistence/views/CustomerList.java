@@ -91,6 +91,6 @@ public class CustomerList {
         return sid;
     }
 
-    protected CustomerList() {
+    public CustomerList() {
     }
 }

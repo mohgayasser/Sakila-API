@@ -3,6 +3,7 @@ package gov.iti.jets.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class Staff {
     @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = {CascadeType.MERGE})
     @JoinColumn(name = "address_id", nullable = false)
 
     private Address address;

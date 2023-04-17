@@ -82,6 +82,6 @@ public class StaffList {
         return sid;
     }
 
-    protected StaffList() {
+    public StaffList() {
     }
 }

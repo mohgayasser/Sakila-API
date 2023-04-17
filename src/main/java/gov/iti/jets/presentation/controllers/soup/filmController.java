@@ -62,7 +62,7 @@ public class filmController {
     }
     @WebMethod()
     public boolean insertFilm(@WebParam(name = "film",mode = WebParam.Mode.IN)OperationalFilmDto filmDto) throws validationException {
-        System.out.println(filmDto);
+
         validatorHandler handler = new validatorHandler();
         Set<ConstraintViolation<OperationalFilmDto>> violations = handler.getValidation().validate(filmDto);
         if(violations.size() >0){

@@ -3,10 +3,12 @@ package gov.iti.jets.service;
 import gov.iti.jets.persistence.dao.*;
 import gov.iti.jets.persistence.dao.interfaces.EntityManagerOperations;
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
+import gov.iti.jets.persistence.dto.customer.CustomerListDto;
 import gov.iti.jets.persistence.dto.customer.CustomerPaymentDto;
 import gov.iti.jets.persistence.dto.customer.CustomerRentalDto;
 import gov.iti.jets.persistence.entity.*;
 import gov.iti.jets.presentation.models.AddCustomerDto;
+import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.mapper.CustomerMapper;
 import gov.iti.jets.service.util.mapper.CustomerPaymentMapper;
@@ -29,7 +31,7 @@ public CustomerService(){
 
         Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customerId,"find"));
         CustomerDto customerDto = null;
-        if(customer.isPresent()) {
+        if(customer.isPresent()&&customer.get().getActive()) {
              customerDto = CustomerMapper.INSTANCE.customerToCustomerDto(customer.get());
         }else {
             throw new validationException("this Customer doesn't exist in our system");
@@ -41,7 +43,7 @@ public CustomerService(){
     public BigDecimal getCustomerBalanceinSpecificDate(Integer customerId, Date date) throws validationException {
         EntityManager entityManager = entityManagerOperations.getEntityManager();
 
-        customerImpl customer = new customerImpl();
+        CustomerImpl customer = new CustomerImpl();
         BigDecimal amount = customer.getcustomerBalanceInspecificDate(entityManager,customerId,date);
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
@@ -49,7 +51,7 @@ public CustomerService(){
     }
     public BigDecimal getCustomerBalanceinSpecificDateManaged(EntityManager entityManager, Integer customerId, Date date) throws validationException {
 
-        customerImpl customer = new customerImpl();
+        CustomerImpl customer = new CustomerImpl();
         BigDecimal amount = customer.getcustomerBalanceInspecificDate(entityManager,customerId,date);
 
         return amount;
@@ -58,9 +60,10 @@ public CustomerService(){
         EntityManager entityManager = entityManagerOperations.getEntityManager();
 
         Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customerId,"find"));
+
         Set<Rental> rentalList =null;
         Set<CustomerRentalDto> rentalDtoList = new HashSet<>() ;
-        if(customer.isPresent()){
+        if(customer.isPresent()&&customer.get().getActive()){
             rentalList =  customer.get().getRentals();
             rentalList.forEach(rental -> {
                 System.out.println("rental in loop ->"+rental);
@@ -79,7 +82,7 @@ public CustomerService(){
         Optional<Customer> customer = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customerId,"find"));
         Set<Payment> rentalList =null;
         Set<CustomerPaymentDto> rentalDtoList = new HashSet<>() ;
-        if(customer.isPresent()){
+        if(customer.isPresent()&&customer.get().getActive()){
             rentalList =  customer.get().getPayments();
             rentalList.forEach(payment -> {
                 System.out.println("rental in loop ->"+payment);
@@ -101,7 +104,7 @@ public CustomerService(){
         StoreService storeService =new StoreService();
         Store store = null;
         try {
-            store = storeService.getStoreById(customerDto.getStoreId());
+            store = storeService.getStoreById(entityManager,customerDto.getStoreId());
         } catch (validationException e) {
             throw new validationException("this store id is wrong ");
         }
@@ -129,12 +132,31 @@ public CustomerService(){
         } catch (validationException e) {
             customer.getAddress().getCity().getCountry().setLastUpdate(new Date());
         }
-
-        System.out.println("customer ->"+customer);
         customer.setActive(true);
         Customer addedCustomer=entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customer,"update");
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
         return true;
+    }
+    public List<CustomerListDto> getCustomersList(Page page) throws validationException {
+        EntityManager entityManager= entityManagerOperations.getEntityManager();
+        CustomerImpl customer = new CustomerImpl();
+        List<CustomerListDto> customerListDtos =customer.getCustomersList(entityManager,page);
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
+        return customerListDtos;
+    }
+    public Boolean softDelete(Integer customerId) throws validationException {
+        EntityManager entityManager= entityManagerOperations.getEntityManager();
+        Customer customer = entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Customer.class), customerId, "find");
+       if(customer.getActive()){
+        customer.setActive(false);
+        Customer deletedCustomer = entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Customer.class), customer, "update");
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
+        return true;
+    }else {
+           throw new validationException("this customer does not exists in our system already");
+       }
     }
 }
