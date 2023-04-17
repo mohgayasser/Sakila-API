@@ -1,6 +1,6 @@
 package gov.iti.jets.service.util.mapper;
 
-import gov.iti.jets.persistence.dto.films.FilmListDto;
+import gov.iti.jets.persistence.dto.films.getFilmListDto;
 import gov.iti.jets.persistence.views.FilmList;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -9,8 +9,8 @@ import org.mapstruct.factory.Mappers;
 public interface FilmListMapper {
     FilmListMapper INSTANCE = Mappers.getMapper(FilmListMapper.class);
 
-    FilmList filmListDtoToFilmList(FilmListDto filmListDto);
+    FilmList filmListDtoToFilmList(getFilmListDto getFilmListDto);
 
-    FilmListDto filmListToFilmListDto(FilmList filmList);
+    getFilmListDto filmListToFilmListDto(FilmList filmList);
 
 }

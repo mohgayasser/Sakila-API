@@ -1,32 +1,37 @@
 package gov.iti.jets.service.film;
 
-import gov.iti.jets.persistence.dao.RepositoryImpl;
+import gov.iti.jets.persistence.dao.EntityManagerLoaner;
+import gov.iti.jets.persistence.dao.EntityManagerOperationsProxy;
+import gov.iti.jets.persistence.dao.TransactionImpl;
+import gov.iti.jets.persistence.dao.filmImpl;
+import gov.iti.jets.persistence.dao.interfaces.EntityManagerOperations;
 import gov.iti.jets.persistence.entity.*;
 import gov.iti.jets.persistence.dto.films.OperationalFilmDto;
 import gov.iti.jets.presentation.mappers.OperationalFilmMapper;
-import gov.iti.jets.service.interfaces.filmService;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.mapper.OperationalToFilmMapper;
+import jakarta.persistence.EntityManager;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class insertFilmService  implements filmService {
+public class insertFilmService   {
+    filmImpl film = new filmImpl();
+  EntityManagerLoaner entityManagerLoaner =new EntityManagerLoaner();
+    private final EntityManagerOperations entityManagerOperations;
+    EntityManager entityManager;
+    public insertFilmService(){
+        entityManagerOperations =new EntityManagerOperationsProxy();
+         entityManager = entityManagerOperations.getEntityManager();
+    }
 
-    RepositoryImpl<Language, Integer> languageRepo = new RepositoryImpl<>(Language.class);
-    RepositoryImpl<Actor, Integer> actorRepo = new RepositoryImpl<>(Actor.class);
-    RepositoryImpl<Store, Integer> storeRepo = new RepositoryImpl<>(Store.class);
-    RepositoryImpl<Category, Integer> categoryRepo = new RepositoryImpl<>(Category.class);
-    RepositoryImpl<FilmActor, Integer> FilmActorRepo = new RepositoryImpl<>(FilmActor.class);
-    RepositoryImpl<FilmCategory, Integer> FilmCategoryRepo = new RepositoryImpl<>(FilmCategory.class);
+    public boolean insertFilm(gov.iti.jets.presentation.models.OperationalFilmDto filmDto) throws validationException {
 
-    public boolean insertFilm(gov.iti.jets.presentation.dto.OperationalFilmDto filmDto) throws validationException {
-        System.out.println(filmDto);
         OperationalFilmDto operationalFilmDto =OperationalFilmMapper.INSTANCE.presentationToService(filmDto);
         Film newFilm = OperationalToFilmMapper.INSTANCE.OperationalToFilm(operationalFilmDto);
-        Optional<Language> FilmLanguage = languageRepo.findById(operationalFilmDto.getLanguageId());
+        Optional<Language> FilmLanguage = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Language.class),operationalFilmDto.getLanguageId(),"find"));
         newFilm.setLanguage(FilmLanguage.get());
         if(FilmLanguage.isPresent()) {
             newFilm.setLanguage(FilmLanguage.get());
@@ -35,7 +40,7 @@ public class insertFilmService  implements filmService {
            throw new validationException("this language id"+operationalFilmDto.getLanguageId()+" does not exists in ouyr system");
         }
         if(operationalFilmDto.getOrignalLanguageId()!=0) {
-            Optional<Language> filmOrignalLanguage = languageRepo.findById(operationalFilmDto.getOrignalLanguageId());
+            Optional<Language> filmOrignalLanguage = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Language.class),operationalFilmDto.getOrignalLanguageId(),"find"));
             newFilm.setOriginalLanguage(filmOrignalLanguage.get());
         }
         newFilm.setLastUpdate(new Date());
@@ -43,20 +48,23 @@ public class insertFilmService  implements filmService {
         newFilm.setInventories(insertInventoryList(newFilm,operationalFilmDto));
 
 
-        Film addedFilm = film.create(newFilm);
+        Film addedFilm = film.createFilm(entityManager,newFilm);
         if(addedFilm == null) {
             throw new validationException("invalid data please check your data with required then try again");
         }
         fillCategory(operationalFilmDto,addedFilm);
         fillFimActors(operationalFilmDto,addedFilm);
         System.out.println(addedFilm);
+        entityManager.flush();
+        entityManagerOperations.closeEntityManager();
         return true;
     }
-    private  Set<Inventory> insertInventoryList( Film film,OperationalFilmDto operationalFilmDto){
+    private  Set<Inventory> insertInventoryList(Film film,OperationalFilmDto operationalFilmDto){
+
         Set<Inventory> inventories = new HashSet<>();
         operationalFilmDto.getStoresIds().forEach(store->{
             try {
-                Optional<Store> filmStore = storeRepo.findById(store);
+                Optional<Store> filmStore = Optional.ofNullable(entityManagerLoaner.executeCRUD( entityManager,new TransactionImpl<>(Store.class),store,"find"));
                 if(filmStore.isPresent()) {
                     Inventory inventory = new Inventory(film, filmStore.get(), new Date());
                    inventories.add(inventory);
@@ -73,11 +81,11 @@ public class insertFilmService  implements filmService {
 
         operationalFilmDto.getFilmActorsIds().forEach(actor->{
             try {
-                Optional<Actor> filmActor = actorRepo.findById(actor);
+                Optional<Actor> filmActor = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Actor.class),actor,"find"));
                 if(filmActor.isPresent()) {
                     System.out.println(filmActor);
                     FilmActor newFilmActor = new FilmActor(filmActor.get(), film, new Date());
-                    FilmActor actor1 = FilmActorRepo.update(newFilmActor);
+                    FilmActor actor1 = entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(FilmActor.class),newFilmActor,"update");
 
                 }
             } catch (validationException e) {
@@ -91,11 +99,11 @@ public class insertFilmService  implements filmService {
 
         operationalFilmDto.getFilmCategoriesIds().forEach(category->{
             try {
-                Optional<Category> filmCategory = categoryRepo.findById(category);
+                Optional<Category> filmCategory = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Category.class),category,"find"));
                 System.out.println("out from category "+filmCategory.isPresent()+" isempty "+filmCategory.isEmpty());
                 if(filmCategory.isPresent()) {
                     FilmCategory categoryObj = new FilmCategory(film,filmCategory.get(), new Date());
-                    FilmCategory category1 =FilmCategoryRepo.update(categoryObj);
+                    FilmCategory category1 =entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(FilmCategory.class),categoryObj,"update");
 
                 }
             } catch (validationException e) {

@@ -1,13 +1,11 @@
 package gov.iti.jets.service.util.mapper;
 
 import gov.iti.jets.persistence.dto.ActorDto;
+import gov.iti.jets.persistence.dto.PaymentDto;
 import gov.iti.jets.persistence.dto.inventory.FilmDto;
 import gov.iti.jets.persistence.dto.inventory.InventoryDto;
 import gov.iti.jets.persistence.dto.StoreDto;
-import gov.iti.jets.persistence.entity.Actor;
-import gov.iti.jets.persistence.entity.Film;
-import gov.iti.jets.persistence.entity.Inventory;
-import gov.iti.jets.persistence.entity.Store;
+import gov.iti.jets.persistence.entity.*;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -31,11 +29,21 @@ public interface InventoryMapper {
     Store storeDtoToStore(StoreDto storeDto);
 
     StoreDto storeToStoreDto(Store store);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Film filmDtoToFilm(FilmDto filmDto);
+
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     FilmDto filmToFilmDto(Film film);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Film updateFilmFromFilmDto(FilmDto filmDto, @MappingTarget Film film);
+
+
+    Payment paymentDtoToPayment(PaymentDto paymentDto);
+
+    PaymentDto paymentToPaymentDto(Payment payment);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    Payment updatePaymentFromPaymentDto(PaymentDto paymentDto, @MappingTarget Payment payment);
 }

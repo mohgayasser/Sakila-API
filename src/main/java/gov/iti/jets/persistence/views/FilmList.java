@@ -1,6 +1,6 @@
 package gov.iti.jets.persistence.views;
 
-import gov.iti.jets.service.util.converters.filmListConverter;
+import gov.iti.jets.persistence.converters.filmListConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

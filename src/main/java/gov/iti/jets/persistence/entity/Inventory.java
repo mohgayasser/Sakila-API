@@ -91,4 +91,14 @@ public class Inventory {
         this.rentals = rentals;
     }
 
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "id=" + id +
+                ", film=" + film +
+                ", store=" + store +
+                ", lastUpdate=" + lastUpdate +
+                ", rentals=" + rentals +
+                '}';
+    }
 }

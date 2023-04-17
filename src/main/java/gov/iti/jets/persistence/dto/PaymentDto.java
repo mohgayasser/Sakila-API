@@ -5,6 +5,9 @@ import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,6 +16,9 @@ import java.util.Date;
 /**
  * A DTO for the {@link gov.iti.jets.persistence.entity.Payment} entity
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @XmlRootElement
 public class PaymentDto implements Serializable {
     @XmlAttribute
@@ -25,32 +31,5 @@ public class PaymentDto implements Serializable {
     private  Date paymentDate;
     @XmlElement
     private  Date lastUpdate;
-    public PaymentDto(){}
-    public PaymentDto(Integer id, CustomerDto customer, BigDecimal amount, Date paymentDate, Date lastUpdate) {
-        this.id = id;
-        this.customer = customer;
-        this.amount = amount;
-        this.paymentDate = paymentDate;
-        this.lastUpdate = lastUpdate;
-    }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public CustomerDto getCustomer() {
-        return customer;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public Date getLastUpdate() {
-        return lastUpdate;
-    }
 }

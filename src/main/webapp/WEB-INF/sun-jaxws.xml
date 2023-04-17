@@ -13,4 +13,8 @@
             url-pattern="/ws/films" />
 
 
+    <endpoint
+            name="customerController"
+            implementation="gov.iti.jets.presentation.controllers.soup.customerController"
+            url-pattern="/ws/customer" />
 </endpoints>

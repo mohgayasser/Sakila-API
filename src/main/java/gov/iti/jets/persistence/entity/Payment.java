@@ -83,6 +83,16 @@ public class Payment {
 //        this.paymentDate = paymentDate;
 //    }
 
+
+    public Payment(Customer customer, Staff staff, Rental rental, BigDecimal amount, Date paymentDate, Date lastUpdate) {
+        this.customer = customer;
+        this.staff = staff;
+        this.rental = rental;
+        this.amount = amount;
+        this.paymentDate = paymentDate;
+        this.lastUpdate = lastUpdate;
+    }
+
     public Payment() {
     }
 

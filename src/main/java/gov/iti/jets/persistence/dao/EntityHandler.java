@@ -1,20 +1,31 @@
 package gov.iti.jets.persistence.dao;
 
+import gov.iti.jets.persistence.dao.interfaces.EntityManagerOperations;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
-public class EntityHandler {
+public class EntityHandler  implements EntityManagerOperations {
     private static EntityManagerFactory entityManagerFactory;
-    private EntityHandler(){};
-
-    public static EntityManager getEntityManager(){
-         if(entityManagerFactory == null){
-              entityManagerFactory = Persistence.createEntityManagerFactory("sakila");
-         }
+    public EntityHandler() {
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("sakila") ;
+    }
+    @Override
+    public  EntityManager getEntityManager(){
         return entityManagerFactory.createEntityManager();
     }
+
+    @Override
+    public void closeEntityManager() {
+        EntityManager entityManager = EntityManagerHolder.getEntityManager();
+        if (entityManager != null && entityManager.isOpen()) {
+            entityManager.getTransaction().commit();
+            entityManager.close();
+            EntityManagerHolder.removeEntityManager();
+        }
+    }
+
     public static CriteriaBuilder getCriteriaBuilder(){
         if(entityManagerFactory == null){
             entityManagerFactory = Persistence.createEntityManagerFactory("sakila");

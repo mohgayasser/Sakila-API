@@ -1,9 +1,8 @@
 package gov.iti.jets.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.locationtech.jts.geom.Geometry;
 
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -26,7 +25,7 @@ public class Address {
     @Column(name = "district", nullable = false, length = 20)
     private String district;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false,cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "city_id", nullable = false)
     @JsonIgnore
     private City city;
@@ -52,6 +51,16 @@ public class Address {
     @OneToMany(mappedBy = "address")
     @JsonIgnore
     private Set<Customer> customers = new LinkedHashSet<>();
+    @Column(name = "location", columnDefinition = "GEOMETRY(65535) not null")
+    private Geometry location;
+    public Geometry getLocation() {
+
+        return location;
+    }
+
+    public void setLocation(Geometry location) {
+        this.location = location;
+    }
 
     public Integer getId() {
         return id;
@@ -141,10 +150,18 @@ public class Address {
         this.customers = customers;
     }
 
-/*
-    TODO [JPA Buddy] create field to map the 'location' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
-    @Column(name = "location", columnDefinition = "GEOMETRY(65535) not null")
-    private Object location;
-*/
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", district='" + district + '\'' +
+                ", city=" + city +
+                ", postalCode='" + postalCode + '\'' +
+                ", phone='" + phone + '\'' +
+                ", lastUpdate=" + lastUpdate +
+                ", location=" + location +
+                '}';
+    }
 }

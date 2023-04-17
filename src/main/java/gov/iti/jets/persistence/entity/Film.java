@@ -1,8 +1,8 @@
 package gov.iti.jets.persistence.entity;
 
 import gov.iti.jets.persistence.entity.enums.FilmRating;
-import gov.iti.jets.service.util.converters.filmRatingConverter;
-import gov.iti.jets.service.util.converters.specialFeatureConverter;
+import gov.iti.jets.persistence.converters.filmRatingConverter;
+import gov.iti.jets.persistence.converters.specialFeatureConverter;
 import jakarta.persistence.*;
 
 
@@ -216,9 +216,6 @@ public class Film {
                 ", rating=" + rating +
                 ", specialFeatures=" + specialFeatures +
                 ", lastUpdate=" + lastUpdate +
-                ", inventories=" + inventories +
-                ", filmActors=" + filmActors +
-                ", filmCategories=" + filmCategories +
                 '}';
     }
 }

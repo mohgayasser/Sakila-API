@@ -63,6 +63,14 @@ public class Rental {
     public Rental() {
     }
 
+    public Rental(Date rentalDate, Inventory inventory, Customer customer, Staff staff, Date lastUpdate) {
+        this.rentalDate = rentalDate;
+        this.inventory = inventory;
+        this.customer = customer;
+        this.staff = staff;
+        this.lastUpdate = lastUpdate;
+    }
+
     public Rental(Integer id, Date rentalDate, Inventory inventory, Customer customer, Date returnDate, Staff staff, Date lastUpdate, Set<Payment> payments) {
         this.id = id;
         this.rentalDate = rentalDate;
@@ -122,4 +130,16 @@ public class Rental {
         this.payments = payments;
     }
 
+    @Override
+    public String toString() {
+        return "Rental{" +
+                "id=" + id +
+                ", rentalDate=" + rentalDate +
+                ", customer=" + customer +
+                ", returnDate=" + returnDate +
+                ", staff=" + staff +
+                ", lastUpdate=" + lastUpdate +
+                ", payments=" + payments +
+                '}';
+    }
 }
