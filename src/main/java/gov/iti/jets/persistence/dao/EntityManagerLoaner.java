@@ -48,9 +48,6 @@ public class EntityManagerLoaner {
             } else {
                 result = (T)operations.singleResult(entityManager,Query, map);
             }
-
-            //transaction.commit();
-
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
@@ -62,7 +59,6 @@ public class EntityManagerLoaner {
         List<T> result;
         try{
              result = (List<T>)operations.listResult(entityManager,Query, map,page);
-          //  transaction.commit();
 
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();

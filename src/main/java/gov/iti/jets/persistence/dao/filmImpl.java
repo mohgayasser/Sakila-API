@@ -17,7 +17,6 @@ public class filmImpl implements filmDao {
     EntityManagerLoaner entityManagerLoaner;
     public filmImpl() {
         entityManagerLoaner = new EntityManagerLoaner();
-
     }
     @Override
     public List<Film> getFilmByName(EntityManager entityManager, String filmName, Page page) throws validationException {

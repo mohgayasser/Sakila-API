@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.dto;
 
+import gov.iti.jets.persistence.dto.actor.ActorDto;
 import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;

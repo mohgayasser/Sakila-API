@@ -21,4 +21,8 @@
             name="staffController"
             implementation="gov.iti.jets.presentation.controllers.soup.StaffController"
             url-pattern="/ws/staffs" />
+    <endpoint
+            name="actorController"
+            implementation="gov.iti.jets.presentation.controllers.soup.ActorController"
+            url-pattern="/ws/actors" />
 </endpoints>

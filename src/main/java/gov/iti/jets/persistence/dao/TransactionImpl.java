@@ -13,6 +13,7 @@ import java.util.Map;
 public class TransactionImpl<T> implements Transaction<T>   {
     private Class<T> type;
     public TransactionImpl(Class<T> type){
+
         this.type = type;
     }
     @Override
@@ -23,6 +24,7 @@ public class TransactionImpl<T> implements Transaction<T>   {
         }
         result.setMaxResults(1);
         T finalResult = (T)result.getSingleResult();
+        System.out.println("in impl"+finalResult);
         return finalResult ;
     }
 

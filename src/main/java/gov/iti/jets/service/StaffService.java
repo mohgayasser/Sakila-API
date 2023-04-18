@@ -106,8 +106,6 @@ public class StaffService {
         staff.setPassword(PasswordHandler.hashPassword(staffPassword));
         StaffImpl staffImpl=new StaffImpl();
         StoreService storeService =new StoreService();
-
-
         staff.getAddress().setLastUpdate(new Date());
 
         Store store = null;
@@ -141,7 +139,7 @@ public class StaffService {
         }
         System.out.println("staffAddress ->"+staff.getAddress());
         Staff newStaff =staffImpl.InsertStaff(entityManager,staff);
-        System.out.println("newstaf ->>>"+newStaff );
+
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
 

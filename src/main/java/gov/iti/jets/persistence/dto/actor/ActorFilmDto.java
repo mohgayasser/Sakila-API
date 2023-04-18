@@ -1,4 +1,4 @@
-package gov.iti.jets.persistence.dto;
+package gov.iti.jets.persistence.dto.actor;
 
 import gov.iti.jets.persistence.entity.enums.FilmRating;
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -21,19 +21,17 @@ import java.util.Set;
 @NoArgsConstructor
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FilmDto implements Serializable {
-
+public class ActorFilmDto implements Serializable {
     private  Integer id;
     private  String title;
     private  String description;
     private  Integer releaseYear;
-    private  LanguageDto language;
-    private  LanguageDto originalLanguage;
+    private  ActorFilmLanguageDto language;
+    private  ActorFilmLanguageDto orignalLanguage;
     private  Short rentalDuration;
     private  Float rentalRate;
     private  Integer length;
     private  Float replacementCost;
     private  FilmRating rating;
     private  Set<String> specialFeatures;
-    private  Date lastUpdate;
 }

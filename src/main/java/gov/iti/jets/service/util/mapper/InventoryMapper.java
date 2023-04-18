@@ -1,6 +1,6 @@
 package gov.iti.jets.service.util.mapper;
 
-import gov.iti.jets.persistence.dto.ActorDto;
+import gov.iti.jets.persistence.dto.actor.ActorDto;
 import gov.iti.jets.persistence.dto.PaymentDto;
 import gov.iti.jets.persistence.dto.inventory.FilmDto;
 import gov.iti.jets.persistence.dto.inventory.InventoryDto;
