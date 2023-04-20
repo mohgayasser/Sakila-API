@@ -8,14 +8,11 @@ import gov.iti.jets.presentation.models.AddCustomerDto;
 import gov.iti.jets.presentation.models.Date;
 import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.service.CustomerService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
-import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
-import jakarta.validation.ConstraintViolation;
-import org.geolatte.geom.builder.DSL;
 
 import java.math.BigDecimal;
 import java.util.Calendar;

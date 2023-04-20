@@ -1,14 +1,13 @@
 package gov.iti.jets.persistence.dto.actor;
 
 
-import gov.iti.jets.service.util.customAnnotations.EmptyAnnotation;
+import gov.iti.jets.presentation.models.customAnnotations.EmptyAnnotation;
 import jakarta.xml.bind.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * A DTO for the {@link gov.iti.jets.persistence.entity.Actor} entity

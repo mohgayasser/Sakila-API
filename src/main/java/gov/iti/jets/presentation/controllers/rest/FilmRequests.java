@@ -3,18 +3,15 @@ package gov.iti.jets.presentation.controllers.rest;
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.films.getFilmDto;
 import gov.iti.jets.persistence.dto.films.getFilmListDto;
-import gov.iti.jets.presentation.models.OperationalFilmDto;
-import gov.iti.jets.presentation.models.Page;
-import gov.iti.jets.presentation.models.RentFilmDto;
-import gov.iti.jets.presentation.models.ReturnFilmDto;
+import gov.iti.jets.presentation.models.*;
+import gov.iti.jets.presentation.models.Link;
 import gov.iti.jets.service.film.RentFilmService;
 import gov.iti.jets.service.film.ReturnFilmService;
 import gov.iti.jets.service.film.filmService;
 import gov.iti.jets.service.film.insertFilmService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.validations.validatorHandler;
-import jakarta.jws.WebParam;
 import jakarta.validation.ConstraintViolation;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
@@ -47,13 +44,17 @@ public class FilmRequests {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFilmById(@PathParam("id") int filmId) {
+    public Response getFilmById(@PathParam("id") int filmId,@Context UriInfo uriInfo) {
         if(filmId<1){
             throw new validationException("you need to enter a valid Id ex:starting from 1");
         }
         filmService getFilmService =new filmService();
         getFilmDto filmDto =getFilmService.getFilmById(filmId);
-        return  Response.ok(filmDto).build();
+        GetFilmByIdDTO getFilmByIdDTO =new GetFilmByIdDTO();
+        Link link =new Link(uriInfo.getAbsolutePathBuilder().toString(),"self");
+        getFilmByIdDTO.setFilmDto(filmDto);
+        getFilmByIdDTO.addLink(link,uriInfo);
+        return  Response.ok(getFilmByIdDTO).build();
     }
     @GET
     @Path("/getAllFilms")
@@ -96,7 +97,7 @@ public class FilmRequests {
         }
     }
     @GET
-    @Path("checkExistence/{id}")
+    @Path("{id}/checkExistence")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public Response checkFilmExistance(@PathParam("id") int id)  {
@@ -109,7 +110,7 @@ public class FilmRequests {
         return Response.ok(result).build();
     }
     @GET
-    @Path("getFilmRenter/{id}")
+    @Path("{id}/getFilmRenter")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces(MediaType.APPLICATION_JSON)
     public Set<CustomerDto> getFilmRenter(@PathParam ("id") int id){

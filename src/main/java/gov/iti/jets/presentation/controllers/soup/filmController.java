@@ -7,7 +7,7 @@ import gov.iti.jets.persistence.dto.films.getFilmDto;
 import gov.iti.jets.presentation.models.RentFilmDto;
 import gov.iti.jets.presentation.models.ReturnFilmDto;
 import gov.iti.jets.service.film.*;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.service.util.validations.validatorHandler;

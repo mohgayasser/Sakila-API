@@ -28,7 +28,7 @@ public class Staff {
     private Address address;
 
     @Column(name = "picture")
-    private byte[] picture;
+    private byte[] picture ;
 
     @Column(name = "email", length = 50)
     private String email;
@@ -55,6 +55,14 @@ public class Staff {
 
     @OneToMany(mappedBy = "staff")
     private Set<Rental> rentals = new LinkedHashSet<>();
+
+    @PrePersist
+    public void setDefaultDataIfNull() {
+        if (picture == null) {
+            picture = new byte[] {0}; // set default value to byte array with single element of 0
+        }
+    }
+
     public Integer getId() {
         return id;
     }

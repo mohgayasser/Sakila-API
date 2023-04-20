@@ -1,4 +1,6 @@
-package gov.iti.jets.service.util.customAnnotations;
+package gov.iti.jets.service.util.validations;
+
+import gov.iti.jets.presentation.models.customAnnotations.EmptyAnnotation;
 
 import java.lang.reflect.Field;
 

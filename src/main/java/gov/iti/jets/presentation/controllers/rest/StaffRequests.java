@@ -1,17 +1,16 @@
 package gov.iti.jets.presentation.controllers.rest;
 
-import gov.iti.jets.persistence.dto.customer.CustomerListDto;
 import gov.iti.jets.persistence.dto.staff.ShowStaffDto;
 import gov.iti.jets.persistence.dto.staff.StaffListDto;
 import gov.iti.jets.persistence.dto.staff.StaffPaymentDto;
 import gov.iti.jets.persistence.dto.staff.StaffRentalCustomerDto;
+import gov.iti.jets.presentation.models.GetStaffByIdDTo;
 import gov.iti.jets.presentation.models.InsertStaffDto;
+import gov.iti.jets.presentation.models.Link;
 import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.service.StaffService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.validations.validatorHandler;
-import jakarta.jws.WebParam;
 import jakarta.validation.ConstraintViolation;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
@@ -28,13 +27,18 @@ public class StaffRequests {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getStaffById (@PathParam("id") Integer Id) {
+    public Response getStaffById (@PathParam("id") Integer Id,@Context UriInfo uriInfo) {
         if(Id<1){
             throw new validationException("you need to enter a valid Id which started from 1");
         }else {
             StaffService staff = new StaffService();
             ShowStaffDto getStaff = staff.getStaffById(Id);
-            return Response.ok(getStaff).build();
+            gov.iti.jets.presentation.models.Link link =new Link(uriInfo.getAbsolutePathBuilder().toString(),"self");
+            GetStaffByIdDTo getStaffByIdDTo = new GetStaffByIdDTo();
+            getStaffByIdDTo.setShowStaffDto(getStaff);
+            getStaffByIdDTo.addLink(link,uriInfo);
+
+            return Response.ok(getStaffByIdDTo).build();
         }
     }
     @DELETE
@@ -50,7 +54,7 @@ public class StaffRequests {
             return Response.ok(result).build();        }
     }
     @GET
-    @Path("getPayments/{id}")
+    @Path("{id}/getPayments")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStaffPayments (@PathParam("id") Integer Id)  {
         if (Id < 1) {
@@ -59,11 +63,12 @@ public class StaffRequests {
             StaffService staff = new StaffService();
             Set<StaffPaymentDto> getStaff = staff.getStaffPaymentsCreate(Id);
             GenericEntity entity = new GenericEntity<Set<StaffPaymentDto>>(getStaff){};
+
             return Response.ok(entity).build();
         }
     }
     @GET
-    @Path("getRental/{id}")
+    @Path("{id}/getRental")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStaffRentals (@PathParam("id") Integer Id) {
         if (Id < 1) {

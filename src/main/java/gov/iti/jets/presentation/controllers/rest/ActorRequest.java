@@ -3,18 +3,16 @@ package gov.iti.jets.presentation.controllers.rest;
 import gov.iti.jets.persistence.dto.actor.ActorCategoryDto;
 import gov.iti.jets.persistence.dto.actor.ActorDto;
 import gov.iti.jets.persistence.dto.actor.ActorFilmDto;
-import gov.iti.jets.persistence.dto.customer.CustomerListDto;
-import gov.iti.jets.persistence.dto.staff.StaffListDto;
+import gov.iti.jets.presentation.models.Link;
 import gov.iti.jets.presentation.models.UpdateActorDto;
 import gov.iti.jets.service.ActorService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.validations.validatorHandler;
-import jakarta.jws.WebParam;
 import jakarta.validation.ConstraintViolation;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
-
+import gov.iti.jets.presentation.models.getActorByIdDTo;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -35,6 +33,7 @@ public class ActorRequest {
         ActorService actorService =new ActorService();
         Set<ActorCategoryDto>actorCategoryDtos = actorService.getActorFilmsCategory(actorId);
         GenericEntity entity = new GenericEntity<Set<ActorCategoryDto>>(actorCategoryDtos){};
+
         return Response.ok(entity).build();
     }
     @PUT
@@ -94,13 +93,17 @@ public class ActorRequest {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getActorById(@PathParam("id")Integer Id)  {
+    public Response getActorById(@PathParam("id")Integer Id,@Context UriInfo uriInfo)  {
         if(Id==null ||Id<1){
             throw new validationException("you need to enter a valid Id ex:starting from 1");
         }
         ActorService actorService = new ActorService();
         ActorDto actorDto = actorService.getActorById(Id);
-        return Response.ok(actorDto).build();
+        gov.iti.jets.presentation.models.Link link =new Link(uriInfo.getAbsolutePathBuilder().toString(),"self");
+        getActorByIdDTo getActorByIdDTo = new getActorByIdDTo();
+        getActorByIdDTo.setActorDto(actorDto);
+        getActorByIdDTo.addLink(link,uriInfo,Id);
+        return Response.ok(getActorByIdDTo).build();
     }
 
 }

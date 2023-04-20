@@ -1,4 +1,4 @@
-package gov.iti.jets.service.util.customAnnotations;
+package gov.iti.jets.presentation.models.customAnnotations;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

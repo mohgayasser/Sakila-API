@@ -3,10 +3,11 @@ package gov.iti.jets.presentation.controllers.rest;
 import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.presentation.models.AddCategoryDto;
 import gov.iti.jets.presentation.models.CategorywithoutFilmsDto;
+import gov.iti.jets.presentation.models.Link;
+import gov.iti.jets.presentation.models.getCategoryByIdDTo;
 import gov.iti.jets.service.CategoryService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
-import jakarta.jws.WebParam;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -34,13 +35,17 @@ public class CategoryRequests {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCategoryById(@PathParam("id")Integer Id)  {
+    public Response getCategoryById(@PathParam("id")Integer Id,@Context UriInfo uriInfo)  {
         if (Id==null||Id < 0) {
             throw new validationException("you need to enter a valid id");
         } else {
              CategoryService addCategoryService = new CategoryService();
              CategorywithoutFilmsDto  category= addCategoryService.getCategoryByIdWithoutFilms(Id);
-            return Response.ok(category).build();
+            Link link =new Link(uriInfo.getAbsolutePathBuilder().toString(),"self");
+             getCategoryByIdDTo getCategoryDto = new getCategoryByIdDTo();
+             getCategoryDto.addLink(link,uriInfo);
+             getCategoryDto.setCategorywithoutFilmsDto(category);
+            return Response.ok(getCategoryDto).build();
         }
     }
 

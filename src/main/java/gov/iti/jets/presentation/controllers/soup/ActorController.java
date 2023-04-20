@@ -5,7 +5,7 @@ import gov.iti.jets.persistence.dto.actor.ActorDto;
 import gov.iti.jets.persistence.dto.actor.ActorFilmDto;
 import gov.iti.jets.presentation.models.UpdateActorDto;
 import gov.iti.jets.service.ActorService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 import gov.iti.jets.service.util.validations.validatorHandler;
 import jakarta.jws.WebMethod;

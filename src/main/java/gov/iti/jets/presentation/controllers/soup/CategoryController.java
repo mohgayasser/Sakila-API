@@ -4,7 +4,7 @@ import gov.iti.jets.persistence.dto.categories.getCategoryDto;
 import gov.iti.jets.presentation.models.AddCategoryDto;
 import gov.iti.jets.presentation.models.CategorywithoutFilmsDto;
 import gov.iti.jets.service.CategoryService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
 
 import jakarta.jws.WebMethod;

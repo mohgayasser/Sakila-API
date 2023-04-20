@@ -1,6 +1,6 @@
 package gov.iti.jets.persistence.dto.store;
 
-import gov.iti.jets.service.util.customAnnotations.EmptyAnnotation;
+import gov.iti.jets.presentation.models.customAnnotations.EmptyAnnotation;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import lombok.AllArgsConstructor;

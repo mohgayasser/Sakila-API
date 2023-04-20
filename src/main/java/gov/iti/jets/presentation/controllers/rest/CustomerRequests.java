@@ -4,39 +4,39 @@ import gov.iti.jets.persistence.dto.customer.CustomerDto;
 import gov.iti.jets.persistence.dto.customer.CustomerListDto;
 import gov.iti.jets.persistence.dto.customer.CustomerPaymentDto;
 import gov.iti.jets.persistence.dto.customer.CustomerRentalDto;
-import gov.iti.jets.persistence.dto.films.getFilmDto;
-import gov.iti.jets.presentation.models.AddCustomerDto;
-import gov.iti.jets.presentation.models.Date;
-import gov.iti.jets.presentation.models.Page;
-import gov.iti.jets.presentation.models.getCustomerBalance;
+import gov.iti.jets.presentation.models.*;
+import gov.iti.jets.presentation.models.Link;
 import gov.iti.jets.service.CustomerService;
-import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
+import gov.iti.jets.service.util.validations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
-import jakarta.jws.WebMethod;
-import jakarta.jws.WebParam;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Path("customers")
 public class CustomerRequests {
+
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCustomerById(@PathParam("id") Integer id )  {
+    public Response getCustomerById(@PathParam("id") Integer id,@Context UriInfo uriInfo )  {
         if (id==null||id < 0) {
             throw new validationException("you need to enter a valid id");
         } else {
             CustomerService getCustomerService = new CustomerService();
             CustomerDto customerDto = getCustomerService.getCustomerById(id);
-            return  Response.ok(customerDto).build();
+            Link link =new Link(uriInfo.getAbsolutePathBuilder().toString(),"self");
+            GetCustomerByIdDTo getCustomerByIdDTo = new GetCustomerByIdDTo();
+            getCustomerByIdDTo.setCustomerDto(customerDto);
+            getCustomerByIdDTo.addLink(link,uriInfo);
+            return  Response.ok(getCustomerByIdDTo).build();
+
 
         }
     }
@@ -44,20 +44,21 @@ public class CustomerRequests {
     @Path("getBalanceInDate")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getcustomerBalanceInDate(getCustomerBalance getCustomerBalance) {
+    public Response getcustomerBalanceInDate(GetCustomerBalance getCustomerBalance)  {
         String valid = ValidFieldsValidator.validate(getCustomerBalance);
         if(valid.length()>0){
             throw new validationException(valid);
         }else {
-            Calendar cal = new Calendar.Builder().setCalendarType("iso8601").setDate(getCustomerBalance.getDate().getYear(),getCustomerBalance.getDate().getMonth(),getCustomerBalance.getDate().getDay()).build();
+           Calendar cal = new Calendar.Builder().setCalendarType("iso8601").setDate(getCustomerBalance.getDate().getYear(),getCustomerBalance.getDate().getMonth(),getCustomerBalance.getDate().getDay()).build();
             System.out.println("entered date ->" +cal.getTime());
             CustomerService getCustomerService = new CustomerService();
             BigDecimal amount = getCustomerService.getCustomerBalanceinSpecificDate(getCustomerBalance.getId(), cal.getTime());
-            return  Response.ok(amount).build();
+            return Response.ok(amount).build();
+
         }
     }
     @GET
-    @Path("getRentalHistory/{id}")
+    @Path("{id}/getRentalHistory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCustomerRentalHistory(@PathParam("id") Integer customerId)  {
         if(customerId==null||customerId <0){
@@ -72,7 +73,7 @@ public class CustomerRequests {
     }
 
     @GET
-    @Path("getPaymentHistory/{id}")
+    @Path("{id}/getPaymentHistory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getCustomerPaymentHistory(@PathParam("id") Integer customerId)  {
         if(customerId==null||customerId <0){
