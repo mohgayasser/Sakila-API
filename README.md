@@ -1,11 +1,30 @@
 # Sakila API Repository
-This repository contains two APIs that provide access to the Sakila sample database:
-- REST API
-- SOAP API
-## Table of contents
+This Git repository contains the source code and database diagram for the Sakila API REST and Soup API, both implemented in Java using Maven and Tomcat.
+
+##  Table of contents
+* [Requirements](#Requirements)
+* [Installation](#Installation)
 * [REST_API](#REST_API)
 * [SOAP_API](#SOAP_API)
+* [Database](#database)
 * [Technologies](#technologies)
+
+### Requirements:
+- JDK 11 or higher
+- Apache Tomcat 9 or higher
+- Maven 3 or higher
+- Sakila database
+
+### 🔧 Installation and Setup
+
+To run this project locally, you will need to have Maven and Tomcat installed on your machine.
+
+1. Clone the repository to your local machine.
+2. Set up the database by running the `sakila-db.sql` script in your MySQL database.
+3. Update the `db.properties` file with your MySQL database connection details.
+4. Navigate to the project directory and run the command `mvn clean package` to build the project.
+5. Deploy the `war` file to your Tomcat server.
+
 
 ## REST_API
 
@@ -63,6 +82,12 @@ The following endpoints are available for the SOAP API:
 - `/ws/actors`: Provides CRUD operations for actors in the Sakila database and other operations.
 ### Usage
 To use the Sakila SOAP API, you can generate client code for your preferred programming language using a tool such as `wsdl2java` (for Java), or you can use a SOAP client library for your preferred programming language.
+
+### Database Diagram
+Below is the database diagram for the Sakila sample database, which this project is built upon:
+![Sakila database diagram](D:\JavaTrack\JAX-SW\wsdls\sakila-schema.png)
+
+This diagram shows the schema of the Sakila DVD Rental database. The database contains tables for customers, films, rentals, and other related information.
 ## ⚙ Technologies
 * Maven
 * Tomcat
@@ -78,7 +103,8 @@ To use the Sakila SOAP API, you can generate client code for your preferred prog
 * Validation API
 * Hibernate Validator
 
-## Resources
+## 📖 Resources
 
 - [Sakila database documentation](https://dev.mysql.com/doc/sakila/en/)
-- [Sakila REST API documentation](https://documenter.getpostman.com/view/26734941/2s93Y3tfXU#735cf109-d989-4979-b256-c143d5db540f)
+- [Sakila REST API documentation](https://documenter.getpostman.com/view/26734941/2s93Y3tfXU)
+- [Sakila SOAP API WSDL](https://documenter.getpostman.com/view/26734941/2s93Y3tfXU)
