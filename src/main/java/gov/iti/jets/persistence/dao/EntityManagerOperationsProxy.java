@@ -18,11 +18,13 @@ public class EntityManagerOperationsProxy implements EntityManagerOperations {
         EntityManager entityManager = EntityManagerHolder.getEntityManager();
 
         if (entityManager == null || !entityManager.isOpen()) {
+            System.out.println("open Entity Manager");
             entityManager = entityManagerOperations.getEntityManager();
             EntityManagerHolder.setEntityManager(entityManager);
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
         }
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
+
         return entityManager;
     }
 

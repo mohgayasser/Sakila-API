@@ -21,7 +21,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Set;
 
-@WebService(targetNamespace = "staffController")
+@WebService(targetNamespace = "StaffWebServer")
 public class StaffController {
     @WebMethod
     public ShowStaffDto getStaffById (@WebParam(name = "staffId") Integer Id) throws validationException {
@@ -92,7 +92,7 @@ public class StaffController {
             throw new validationException(msgs);
         }
         StaffService staffService= new StaffService();
-        boolean result =staffService.insertStaffMember(insertStaffDto);
+        Integer result =staffService.insertStaffMember(insertStaffDto);
         return true;
     }
 }

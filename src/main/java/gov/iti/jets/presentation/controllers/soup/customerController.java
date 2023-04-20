@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-@WebService(targetNamespace = "customers")
+@WebService(targetNamespace = "CustomerWebServer")
 public class customerController {
     @WebMethod
     public CustomerDto getCustomerById(@WebParam(name = "customerId") Integer id ) throws  validationException {
@@ -74,8 +74,8 @@ public class customerController {
             throw new validationException(valid);
         }
         CustomerService customerService = new CustomerService();
-        boolean result =customerService.AddCustomer(customerDto);
-        return result;
+        Integer result =customerService.AddCustomer(customerDto);
+        return true;
     }
     @WebMethod
     public boolean deleteCustomer(@WebParam(name = "customerId")Integer customerId) throws validationException {

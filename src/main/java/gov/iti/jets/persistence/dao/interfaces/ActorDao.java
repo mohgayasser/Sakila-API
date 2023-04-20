@@ -16,7 +16,7 @@ import java.util.Set;
 public interface ActorDao {
     public ActorDto getactorById(EntityManager entityManager,Integer actorId) throws validationException;
     public List<ActorFilmDto>getActorFilms(EntityManager entityManager, Integer actorId) throws validationException;
-    public boolean addActor(EntityManager entityManager,Actor newActorDto) throws validationException;
+    public Integer addActor(EntityManager entityManager,Actor newActorDto) throws validationException;
     public boolean updateActor(EntityManager entityManager, Actor actor) throws validationException;
     public Set<ActorCategoryDto> getActorFilmsCategory(EntityManager entityManager, Integer actorId) throws validationException;
     public ActorCategoryDto getmostCategory(EntityManager entityManager,Integer actorId) throws validationException;

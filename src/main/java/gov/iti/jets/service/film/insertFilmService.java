@@ -27,7 +27,7 @@ public class insertFilmService   {
          entityManager = entityManagerOperations.getEntityManager();
     }
 
-    public boolean insertFilm(gov.iti.jets.presentation.models.OperationalFilmDto filmDto) throws validationException {
+    public Integer insertFilm(gov.iti.jets.presentation.models.OperationalFilmDto filmDto) throws validationException {
 
         OperationalFilmDto operationalFilmDto =OperationalFilmMapper.INSTANCE.presentationToService(filmDto);
         Film newFilm = OperationalToFilmMapper.INSTANCE.OperationalToFilm(operationalFilmDto);
@@ -57,7 +57,7 @@ public class insertFilmService   {
         System.out.println(addedFilm);
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
-        return true;
+        return addedFilm.getId();
     }
     private  Set<Inventory> insertInventoryList(Film film,OperationalFilmDto operationalFilmDto){
 

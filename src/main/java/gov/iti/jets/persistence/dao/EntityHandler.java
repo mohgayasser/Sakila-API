@@ -22,6 +22,7 @@ public class EntityHandler  implements EntityManagerOperations {
         if (entityManager != null && entityManager.isOpen()) {
             entityManager.getTransaction().commit();
             entityManager.close();
+            System.out.println("close Entity Manager");
             EntityManagerHolder.removeEntityManager();
         }
     }

@@ -42,10 +42,10 @@ public class ActorImpl implements ActorDao {
     }
 
     @Override
-    public boolean addActor(EntityManager entityManager, Actor newActor) throws validationException {
+    public Integer addActor(EntityManager entityManager, Actor newActor) throws validationException {
 
         Actor actor  = entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Actor.class),newActor,"create");
-        return true;
+        return actor.getId();
     }
 
     @Override

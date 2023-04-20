@@ -28,7 +28,7 @@ public class RentFilmService  {
 
     public int rentFilm(RentFilmDto rentFilmDto) throws validationException {
         EntityManager entityManager = entityManagerOperations.getEntityManager();
-
+        Film film1 =entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Film.class),rentFilmDto.getFilmId(),"find");
         //check customer id
         Customer customer =entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),rentFilmDto.getCustomerId(),"find");
 

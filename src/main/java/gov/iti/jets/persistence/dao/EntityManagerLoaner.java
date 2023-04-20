@@ -25,14 +25,14 @@ public class EntityManagerLoaner {
                 case "update" -> (T) operations.update((T) value,entityManager);
                 default -> null;
             };
-
+            System.out.println("result ->"+result);
             //transaction.commit();
-
+            return result;
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
         }
-        return result;
+
     }
     public <T> T execute(EntityManager entityManager,Transaction<T> operations, String Query , Map<String,Object> map) throws validationException {
 
@@ -48,23 +48,24 @@ public class EntityManagerLoaner {
             } else {
                 result = (T)operations.singleResult(entityManager,Query, map);
             }
+            return result;
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
         }
-        return result;
+
     }
     public <T> List<T> executeList(EntityManager entityManager,Transaction<T> operations, String Query , Map<String,Object> map, Page page) throws validationException {
 
         List<T> result;
         try{
              result = (List<T>)operations.listResult(entityManager,Query, map,page);
-
+            return result;
         }catch (RuntimeException e){
             entityManager.getTransaction().rollback();
             throw new validationException("something happened Wrong in the database "+e.getMessage());
         }
-        return result;
+
     }
 
 

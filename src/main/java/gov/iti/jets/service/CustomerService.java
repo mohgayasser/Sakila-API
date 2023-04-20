@@ -96,9 +96,9 @@ public CustomerService(){
         return rentalDtoList;
     }
     //add customer service
-    public boolean AddCustomer(AddCustomerDto customerDto) throws validationException {
+    public Integer AddCustomer(AddCustomerDto customerDto) throws validationException {
         EntityManager entityManager = entityManagerOperations.getEntityManager();
-
+        System.out.println("is entity ->"+entityManager.isOpen());
         Customer customer = newCustomerMapper.INSTANCE.addCustomerDtoToCustomer(customerDto);
 
         StoreService storeService =new StoreService();
@@ -116,10 +116,10 @@ public CustomerService(){
         Optional<City>  city = null;
         try {
             city = cityImpl.getCityByName(entityManager,customerDto.getAddress().getCity());
-            if(city.isPresent()){
-                customer.getAddress().setCity(city.get());
-            }
-        } catch (validationException e) {
+
+            customer.getAddress().setCity(city.get());
+
+        } catch (Exception e) {
             customer.getAddress().getCity().setLastUpdate(new Date());
         }
 
@@ -127,16 +127,18 @@ public CustomerService(){
         Optional<Country>  country = null;
         try {
             country = countryImpl.getCountryByName(entityManager,customerDto.getAddress().getCountry());
-            if(country.isPresent())
-                customer.getAddress().getCity().setCountry(country.get());
-        } catch (validationException e) {
+
+            customer.getAddress().getCity().setCountry(country.get());
+
+        } catch (Exception e) {
             customer.getAddress().getCity().getCountry().setLastUpdate(new Date());
         }
         customer.setActive(true);
         Customer addedCustomer=entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Customer.class),customer,"update");
+        System.out.println("befor flush");
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
-        return true;
+        return addedCustomer.getId();
     }
     public List<CustomerListDto> getCustomersList(Page page) throws validationException {
         EntityManager entityManager= entityManagerOperations.getEntityManager();
@@ -151,6 +153,7 @@ public CustomerService(){
         Customer customer = entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Customer.class), customerId, "find");
        if(customer.getActive()){
         customer.setActive(false);
+        customer.setLastUpdate(new Date());
         Customer deletedCustomer = entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Customer.class), customer, "update");
         entityManager.flush();
         entityManagerOperations.closeEntityManager();

@@ -75,8 +75,6 @@ public class TransactionImpl<T> implements Transaction<T>   {
     @Override
     public T findById(Integer id, EntityManager entityManager) throws validationException {
         T entity = entityManager.find(type, id);
-        // Initialize the lazy association
-        Hibernate.initialize(entity);
         return entity;
 
     }
@@ -100,6 +98,7 @@ public class TransactionImpl<T> implements Transaction<T>   {
     @Override
     public T create(T t,EntityManager entityManager) {
         entityManager.persist(t);
+        System.out.println("wrong in create");
         return t;
     }
 

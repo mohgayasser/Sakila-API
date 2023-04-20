@@ -1,29 +1,37 @@
-package gov.iti.jets.presentation.controllers.soup;
+package gov.iti.jets.presentation.controllers.rest;
 
 import gov.iti.jets.persistence.dto.customer.CustomerDto;
+import gov.iti.jets.persistence.dto.films.getFilmDto;
 import gov.iti.jets.persistence.dto.films.getFilmListDto;
 import gov.iti.jets.presentation.models.OperationalFilmDto;
-import gov.iti.jets.persistence.dto.films.getFilmDto;
+import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.presentation.models.RentFilmDto;
 import gov.iti.jets.presentation.models.ReturnFilmDto;
-import gov.iti.jets.service.film.*;
+import gov.iti.jets.service.film.RentFilmService;
+import gov.iti.jets.service.film.ReturnFilmService;
+import gov.iti.jets.service.film.filmService;
+import gov.iti.jets.service.film.insertFilmService;
 import gov.iti.jets.service.util.customAnnotations.ValidFieldsValidator;
 import gov.iti.jets.service.util.exceptions.validationException;
-import gov.iti.jets.presentation.models.Page;
 import gov.iti.jets.service.util.validations.validatorHandler;
-import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
-import jakarta.jws.WebService;
 import jakarta.validation.ConstraintViolation;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-@WebService (targetNamespace = "FilmWebServer")
-public class filmController {
-    @WebMethod
-    public  List<getFilmDto> getFilmByName( @WebParam(name = "partOfFilmName") String filmName,@WebParam(name = "start") Integer start ,@WebParam(name="limit") Integer limit) throws validationException {
-        if(filmName.equals("")){
+@Path("films")
+public class FilmRequests {
+    @GET
+    @Path("/getFilmName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getfilmByName(@QueryParam("name") String filmName, @QueryParam("start")Integer start, @QueryParam("limit")Integer limit) throws validationException {
+        if(filmName==null||filmName.equals("")){
             throw new validationException("enter film titer for searching");
         }if (limit<1){
             throw new validationException("the page Size of objects must be at least 1");
@@ -33,20 +41,24 @@ public class filmController {
         Page page = new Page(start-1,limit);
         filmService getFilmsService =new filmService();
         List<getFilmDto> getFilmDtoList =  getFilmsService.getFilmByName(filmName,page);
-        return getFilmDtoList;
-
+        GenericEntity entity = new GenericEntity<List<getFilmDto>>(getFilmDtoList){};
+        return Response.ok(entity).build();
     }
-    @WebMethod
-    public getFilmDto getFilmById(@WebParam(name = "filmId")int filmId) throws validationException{
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFilmById(@PathParam("id") int filmId) {
         if(filmId<1){
             throw new validationException("you need to enter a valid Id ex:starting from 1");
         }
         filmService getFilmService =new filmService();
         getFilmDto filmDto =getFilmService.getFilmById(filmId);
-        return  filmDto;
+        return  Response.ok(filmDto).build();
     }
-    @WebMethod
-    public List<getFilmListDto> getFilmList(@WebParam(name = "startPage") int start, @WebParam(name = "pageSize")int limit) throws validationException {
+    @GET
+    @Path("/getAllFilms")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFilmList(@QueryParam("start") int start, @QueryParam("limit") int limit)  {
 
         if (limit<1){
             throw new validationException("the page Size of objects must be at least 1");
@@ -56,12 +68,16 @@ public class filmController {
         Page page= new Page(start-1,limit);
         filmService getFilmService = new filmService();
         List<getFilmListDto> getFilmListDto =getFilmService.getFilmsFromFilmListView(page);
-        return getFilmListDto;
+        GenericEntity entity = new GenericEntity<List<getFilmListDto>>(getFilmListDto){};
+        return Response.ok(entity).build();
 
 
     }
-    @WebMethod()
-    public boolean insertFilm(@WebParam(name = "film",mode = WebParam.Mode.IN)OperationalFilmDto filmDto) throws validationException {
+    @POST
+    @Path("/newFilm")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response insertFilm( OperationalFilmDto filmDto,@Context UriInfo uriInfo)  {
 
         validatorHandler handler = new validatorHandler();
         Set<ConstraintViolation<OperationalFilmDto>> violations = handler.getValidation().validate(filmDto);
@@ -71,20 +87,32 @@ public class filmController {
         }
         insertFilmService insertFilmService = new insertFilmService();
         Integer result = insertFilmService.insertFilm(filmDto);
-        return true;
+        URL url= null;
+        try {
+            url = new URL(uriInfo.getAbsolutePath()+"/"+result.toString());
+            return Response.created(url.toURI()).build();
+        } catch (MalformedURLException |URISyntaxException e) {
+            return Response.ok(result).build();
+        }
     }
-    @WebMethod
-    public Boolean checkFilmExistance(@WebParam (name = "FilmId") int id) throws validationException {
+    @GET
+    @Path("checkExistence/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkFilmExistance(@PathParam("id") int id)  {
         Boolean result = null;
         if(id<0){
             throw new validationException("You need to enter valid id which for ex starting from 1");
         }
         filmService check =new filmService();
         result = check.isFilmInStock(id);
-        return result;
+        return Response.ok(result).build();
     }
-    @WebMethod
-    public Set<CustomerDto> getFilmRenter(@WebParam (name = "FilmId") int id) throws validationException {
+    @GET
+    @Path("getFilmRenter/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Set<CustomerDto> getFilmRenter(@PathParam ("id") int id){
         if(id<0){
             throw new validationException("You need to enter valid id which for ex starting from 1");
         }
@@ -99,14 +127,13 @@ public class filmController {
 
         }
     }
-    @WebMethod
-    public int rentFilm(@WebParam(name = "customerId") int customerId,
-                        @WebParam(name = "storeId") int storeId,
-                        @WebParam(name = "staffId") int staffId,
-                        @WebParam (name = "filmId") int filmId,
-                        @WebParam(name = "numberOfCopies")int copies) throws validationException{
+    @POST
+    @Path("rentFilm/")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response rentFilm( RentFilmDto rentFilmDto) {
 
-        RentFilmDto rentFilmDto = new RentFilmDto(customerId,storeId,staffId,filmId,copies);
+        //RentFilmDto rentFilmDto = new RentFilmDto(customerId,storeId,staffId,filmId,copies);
         String valid = ValidFieldsValidator.validate(rentFilmDto);
         if(valid.length()>0){
             throw new validationException(valid);
@@ -114,15 +141,13 @@ public class filmController {
         RentFilmService rentFilmService = new RentFilmService();
         Integer result = rentFilmService.rentFilm(rentFilmDto);
 
-        return result;
+        return Response.ok(result).build();
     }
-    @WebMethod
-    public boolean returnFilm(@WebParam(name = "customerId") int customerId,
-                        @WebParam(name = "storeId") int storeId,
-                        @WebParam (name = "filmId") int filmId,
-                        @WebParam(name = "returnQuantity")int copies) throws validationException{
-
-        ReturnFilmDto returnFilmDto = new ReturnFilmDto(customerId,storeId,filmId,copies);
+    @POST
+    @Path("returnFilm/")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response returnFilm( ReturnFilmDto returnFilmDto ) {
         String valid = ValidFieldsValidator.validate(returnFilmDto);
         if(valid.length()>0){
             throw new validationException(valid);
@@ -130,10 +155,13 @@ public class filmController {
         ReturnFilmService returnFilmService = new ReturnFilmService();
         boolean result = returnFilmService.returnFilm(returnFilmDto);
 
-        return result;
+        return Response.ok(result).build();
     }
-    @WebMethod
-    public Integer getFilmQuantityInStock(@WebParam(name = "filmId")Integer filmId,@WebParam(name = "storeId") Integer storeId) throws validationException {
+    @GET
+    @Path("getQuantity")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFilmQuantityInStock(@QueryParam("id") Integer filmId,@QueryParam("store") Integer storeId)  {
         if(filmId<0){
             throw new validationException("You need to enter valid filmId which for ex starting from 1");
         }
@@ -142,6 +170,6 @@ public class filmController {
         }
         filmService film =new filmService();
         Integer Quantity = film.getFilmQuantity(filmId,storeId);
-        return  Quantity;
+        return  Response.ok(Quantity).build();
     }
 }

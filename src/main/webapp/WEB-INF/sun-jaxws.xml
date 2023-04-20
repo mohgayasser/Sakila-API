@@ -2,10 +2,7 @@
 
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
 
-    <endpoint
-        name="CategoryController"
-        implementation="gov.iti.jets.presentation.controllers.soup.categoryController"
-        url-pattern="/ws/categories" />
+
 
     <endpoint
             name="filmController"
@@ -14,7 +11,7 @@
 
 
     <endpoint
-            name="customerController"
+            name="customerWebService"
             implementation="gov.iti.jets.presentation.controllers.soup.customerController"
             url-pattern="/ws/customers" />
     <endpoint
@@ -25,4 +22,12 @@
             name="actorController"
             implementation="gov.iti.jets.presentation.controllers.soup.ActorController"
             url-pattern="/ws/actors" />
+    <endpoint
+            name="CategoryController"
+            implementation="gov.iti.jets.presentation.controllers.soup.CategoryController"
+            url-pattern="/ws/categories" />
+    <endpoint
+            name="StoreController"
+            implementation="gov.iti.jets.presentation.controllers.soup.StoreController"
+            url-pattern="/ws/stores" />
 </endpoints>

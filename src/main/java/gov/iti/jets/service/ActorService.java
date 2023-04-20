@@ -45,12 +45,12 @@ public class ActorService {
         return filmDtos;
     }
 
-    public boolean addActor(ActorDto newActor) throws validationException {
+    public Integer addActor(ActorDto newActor) throws validationException {
         EntityManager entityManager = entityManagerOperations.getEntityManager();
         ActorImpl actor = new ActorImpl();
         Actor addActor = ActorMapper.INSTANCE.actorDtoToActor(newActor);
         addActor.setLastUpdate(new Date());
-        boolean result = actor.addActor(entityManager, addActor);
+        Integer result = actor.addActor(entityManager, addActor);
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
         return result;

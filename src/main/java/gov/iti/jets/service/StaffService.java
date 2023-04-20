@@ -26,7 +26,7 @@ public class StaffService {
         entityManagerOperations = new EntityManagerOperationsProxy();
     }
     public ShowStaffDto getStaffById( Integer staffId) throws validationException {
-        EntityManager entityManager = entityManagerOperations.getEntityManager();;
+        EntityManager entityManager = entityManagerOperations.getEntityManager();
         Optional<Staff> staff = Optional.ofNullable(entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Staff.class), staffId, "find"));
         if (staff.isPresent()&&staff.get().getActive()){
             ShowStaffDto showStaffDto = StaffMapper.INSTANCE.staffToShowStaffDto(staff.get());
@@ -44,6 +44,7 @@ public class StaffService {
         Staff staff = entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Staff.class), staffId, "find");
         if(staff.getActive()){
         staff.setActive(false);
+        staff.setLastUpdate(new Date());
         Staff result =entityManagerLoaner.executeCRUD(entityManager, new TransactionImpl<>(Staff.class), staff, "update");
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
@@ -97,8 +98,9 @@ public class StaffService {
         return staffListDtos;
 
     }
-    public boolean insertStaffMember(InsertStaffDto insertStaffDto) throws NoSuchAlgorithmException, validationException {
+    public Integer insertStaffMember(InsertStaffDto insertStaffDto) throws NoSuchAlgorithmException, validationException {
         EntityManager entityManager= entityManagerOperations.getEntityManager();
+
         Staff staff = InsertStaffMapper.INSTANCE.insertStaffDtoToStaff(insertStaffDto);
         staff.setActive(true);
         staff.setLastUpdate(new Date());
@@ -121,10 +123,10 @@ public class StaffService {
         Optional<City>  city = null;
         try {
             city = cityImpl.getCityByName(entityManager,insertStaffDto.getAddress().getCity());
-            if(city.isPresent()){
-                staff.getAddress().setCity(city.get());
-            }
-        } catch (validationException e) {
+
+            staff.getAddress().setCity(city.get());
+
+        } catch (Exception e) {
             staff.getAddress().getCity().setLastUpdate(new Date());
         }
 
@@ -132,18 +134,21 @@ public class StaffService {
         Optional<Country>  country = null;
         try {
             country = countryImpl.getCountryByName(entityManager,insertStaffDto.getAddress().getCountry());
-            if(country.isPresent())
-                staff.getAddress().getCity().setCountry(country.get());
-        } catch (validationException e) {
+            staff.getAddress().getCity().setCountry(country.get());
+
+        } catch (Exception e) {
             staff.getAddress().getCity().getCountry().setLastUpdate(new Date());
         }
-        System.out.println("staffAddress ->"+staff.getAddress());
-        Staff newStaff =staffImpl.InsertStaff(entityManager,staff);
+        Address newAddress  = entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Address.class),staff.getAddress(),"create");
+        staff.setAddress(newAddress);
+        System.out.println("staff ->"+staff);
+        Staff newStaff  = entityManagerLoaner.executeCRUD(entityManager,new TransactionImpl<>(Staff.class),staff,"create");
+
 
         entityManager.flush();
         entityManagerOperations.closeEntityManager();
 
-        return true;
+        return newStaff.getId();
     }
 
 }

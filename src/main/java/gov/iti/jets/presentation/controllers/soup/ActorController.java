@@ -49,8 +49,8 @@ public class ActorController {
             throw new validationException(msgs);
         }
         ActorService actorService =new ActorService();
-        boolean result = actorService.addActor(newActor);
-        return result;
+        Integer result = actorService.addActor(newActor);
+        return true;
     }
     @WebMethod
     public boolean updateActor(@WebParam(name = "newActor") UpdateActorDto actor) throws validationException {
