@@ -19,7 +19,7 @@ import java.util.Set;
 @WebService(targetNamespace = "ActorWebServer")
 public class ActorController {
     @WebMethod
-    public ActorDto getActorById(@WebParam(name = "actorId")Integer Id) throws  validationException {
+        public ActorDto getActorById(@WebParam(name = "actorId")Integer Id) throws  validationException {
         if(Id==null ||Id<1){
             throw new validationException("you need to enter a valid Id ex:starting from 1");
         }
@@ -78,13 +78,5 @@ public class ActorController {
         return actorCategoryDtos;
 
     }
-    @WebMethod
-    public ActorCategoryDto getActorFavCategory(@WebParam(name = "actorId") Integer actorId) throws validationException {
-        if(actorId==null ||actorId<1){
-            throw new validationException("you need to enter a valid Id ex:starting from 1");
-        }
-        ActorService actorService =new ActorService();
-        ActorCategoryDto actorCategoryDtos = actorService.getActorFavCategory(actorId);
-        return actorCategoryDtos;
-    }
+
 }
