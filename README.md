@@ -85,7 +85,7 @@ To use the Sakila SOAP API, you can generate client code for your preferred prog
 
 ### Database Diagram
 Below is the database diagram for the Sakila sample database, which this project is built upon:
-![Sakila database diagram](D:\JavaTrack\JAX-SW\wsdls\sakila-schema.png)
+![Sakila database diagram](https://drive.google.com/file/d/1n2PXMFmjFlleXRTx6GKl1ijwBsgQ5vqY/view)
 
 This diagram shows the schema of the Sakila DVD Rental database. The database contains tables for customers, films, rentals, and other related information.
 ## ⚙ Technologies
@@ -107,4 +107,4 @@ This diagram shows the schema of the Sakila DVD Rental database. The database co
 
 - [Sakila database documentation](https://dev.mysql.com/doc/sakila/en/)
 - [Sakila REST API documentation](https://documenter.getpostman.com/view/26734941/2s93Y3tfXU)
-- [Sakila SOAP API WSDL](https://documenter.getpostman.com/view/26734941/2s93Y3tfXU)
+- [Sakila SOAP API documentation](https://documenter.getpostman.com/view/26734941/2s93Y2TN25)
