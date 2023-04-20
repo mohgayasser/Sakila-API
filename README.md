@@ -3,11 +3,11 @@ This repository contains two APIs that provide access to the Sakila sample datab
 - REST API
 - SOAP API
 ## Table of contents
-* [REST API](#REST API)
-* [SOAP API](#SOAP API)
+* [REST_API](#REST_API)
+* [SOAP_API](#SOAP_API)
 * [Technologies](#technologies)
 
-## REST API
+## REST_API
 
 The Sakila REST API provides access to the data in the Sakila database using a REST API interface. Developers can use common HTTP methods such as GET, PUT, POST, and DELETE to retrieve, create, update, and delete data in the database.
 each table contains a request for getting a specific element by id, the response will return the Location of a newly created element the Header of the Response, and the List of Links that can be used in the table in the Response Body.### Endpoints
@@ -47,7 +47,7 @@ The following endpoints are available for the REST API:
 ### Usage
 To use the Sakila REST API, you can send HTTP requests to the endpoints using a tool such as `curl`, or you can use a client library for your preferred programming language.
 
-## SOAP API
+## SOAP_API
 
 The Sakila SOAP API provides access to the Sakila database using a SOAP-based web service. This API supports CRUD operations on films, staff, customer, actor, store and categories in the Sakila database.
 
