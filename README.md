@@ -10,7 +10,7 @@ This repository contains two APIs that provide access to the Sakila sample datab
 ## REST_API
 
 The Sakila REST API provides access to the data in the Sakila database using a REST API interface. Developers can use common HTTP methods such as GET, PUT, POST, and DELETE to retrieve, create, update, and delete data in the database.
-each table contains a request for getting a specific element by id, the response will return the Location of a newly created element the Header of the Response, and the List of Links that can be used in the table in the Response Body.
+each table contains a request for getting a specific element by id, the response will return the Location of a newly created element at the Header of the Response, and the List of Links that can be used in that table in the Response Body.
 ### Endpoints
 The following endpoints are available for the REST API:
 - `GET /films/getAllFilms`: Returns a list of all films in the Sakila database.
