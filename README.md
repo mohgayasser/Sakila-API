@@ -95,11 +95,9 @@ This diagram shows the schema of the Sakila DVD Rental database. The database co
 * Jersey
 * Lombok
 * Jakarta XML Web Services API
-* JAX-WS RI
 * Hibernate Core
 * Jakarta Servlet API
 * MapStruct
-* Jackson Dataformat XML
 * Validation API
 * Hibernate Validator
 
