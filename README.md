@@ -1,5 +1,5 @@
 # Sakila API Repository
-This Git repository contains the source code and database diagram for the Sakila API REST and Soup API, both implemented in Java using Maven and Tomcat.
+This Git repository contains the source code and database diagram for the Sakila API REST and Soap API, both implemented in Java using Maven and Tomcat.
 
 ##  Table of contents
 * [Requirements](#Requirements)
