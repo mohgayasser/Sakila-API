@@ -11,6 +11,9 @@ import java.util.stream.Stream;
 
 @Mapper
 public interface OperationalToFilmMapper {
+
+
+
     OperationalToFilmMapper INSTANCE = Mappers.getMapper(OperationalToFilmMapper.class);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
