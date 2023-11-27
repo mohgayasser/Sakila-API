@@ -14,8 +14,7 @@ public interface OperationalToFilmMapper {
     OperationalToFilmMapper INSTANCE = Mappers.getMapper(OperationalToFilmMapper.class);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mappings({
-            @Mapping(source = "specialFeatures", target = "specialFeatures", qualifiedByName = "StringConverter")
+    @Mappings({@Mapping(source = "specialFeatures", target = "specialFeatures", qualifiedByName = "StringConverter")
     })
     Film OperationalToFilm(OperationalFilmDto operationalFilmDto);
     @Named("StringConverter")
