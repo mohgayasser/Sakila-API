@@ -14,8 +14,7 @@ public interface OperationalToFilmMapper {
     OperationalToFilmMapper INSTANCE = Mappers.getMapper(OperationalToFilmMapper.class);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mappings({
-            @Mapping(source = "specialFeatures", target = "specialFeatures", qualifiedByName = "fromStringToSet")
+    @Mappings({@Mapping(source = "specialFeatures", target = "specialFeatures", qualifiedByName = "fromStringToSet")
     })
     Film OperationalToFilm(OperationalFilmDto operationalFilmDto);
     @Named("fromStringToSet")
